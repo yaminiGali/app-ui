@@ -1,0 +1,43 @@
+<div class="header">
+  <div class="logo-container">
+      <img src="../../assets/logo.png" alt="Logo" class="logo">
+  </div>
+  <div class="profile" (click)="profileMenu()" [matMenuTriggerFor]="userMenu">
+      <span>{{ name }}</span>
+      <mat-icon>account_circle</mat-icon>
+  </div>
+  <mat-menu #userMenu="matMenu">
+      <button mat-menu-item>Edit Profile</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+</div>
+<div class="container">
+    <div class="filter-bar">
+        <input type="text" class="search-bar" placeholder="Search for restaurants or cuisines" [(ngModel)]="searchTerm" />
+    </div>
+
+    <h2>Explore Restaurants</h2>
+    <div class="restaurant-list">
+        <div class="restaurant-card" *ngFor="let restaurant of filteredRestaurants()" (click)="viewRestaurant(restaurant,restaurant.restaurant_name,restaurant.restaurant_id)">
+          <img class="restaurant-image" [src]="getFullImageUrl(restaurant.restaurant_logo)" alt="{{ restaurant.restaurant_name }}" width="100">
+            <div class="restaurant-info">
+                <h2 class="restaurant-name">{{ restaurant.restaurant_name }}</h2>
+                <p class="restaurant-cuisine">{{ restaurant.cuisine_type }}</p>
+                <p class="restaurant-rating">Rating: {{ restaurant.rating }}</p>
+            </div>
+        </div>
+    </div><br>
+    <h2>Explore Contributors</h2>
+    <div class="restaurant-list">
+        <div class="restaurant-card" *ngFor="let contributor of filteredContributors()" (click)="viewContributor(contributor,contributor.username,contributor.contributor_id)">
+            <div class="restaurant-doodle">
+                <img src="../../assets/foodDoodle.png" alt="Doodle Art" class="doodle-img">
+             </div>
+            <div class="restaurant-info">
+                <h2 class="restaurant-name">{{ contributor.username }}</h2>
+                <p class="restaurant-cuisine">{{ contributor.address }}</p>
+                <p class="restaurant-rating"> {{ contributor.phone_number }}</p>
+            </div>
+        </div>
+    </div>
+</div>

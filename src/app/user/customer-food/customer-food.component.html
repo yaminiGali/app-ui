@@ -1,0 +1,122 @@
+<div class="header">
+    <div class="logo-container">
+        <img src="../../assets/logo.png" alt="Logo" class="logo">
+    </div>
+    <div class="profile" (click)="profileMenu()" [matMenuTriggerFor]="userMenu">
+        <span>{{ customer.username }}</span>
+        <mat-icon>account_circle </mat-icon>
+        <i class="cart-icon" (click)="toggleCartPopup($event)">🛒</i>
+    </div>
+
+    <mat-menu #userMenu="matMenu">
+        <button mat-menu-item>Edit Profile</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+</div>
+<button class="fixed-button" (click)="goBack()">Back</button>
+<div class="cont">
+    <div class="restaurant-header-card" *ngIf="restaurant.restaurant_id">
+        <div class="restaurant-header">
+            <img class="restaurant-image" [src]="getFullImageUrl(restaurant.restaurant_logo)"
+                alt="{{ restaurant.restaurant_name }}" width="100">
+            <div class="restaurant-info">
+                <h1 class="restaurant-name">
+                    {{ restaurant.restaurant_name }}
+                </h1>
+                <p class="restaurant-cuisine">
+                    <span class="material-icons restaurant-icon">restaurant</span>
+                    {{ restaurant.cuisine_type }}
+                </p>
+                <p class="restaurant-address">
+                    <span class="material-icons restaurant-icon">location_on</span>
+                    {{ restaurant.address }}
+                </p>
+                <p class="restaurant-time">
+                    <span class="material-icons restaurant-icon">access_time</span>
+                    OPEN: {{ restaurant.opening_time }} - CLOSE: {{ restaurant.closing_time }}
+                </p>
+                <p class="restaurant-phone">
+                    <span class="material-icons restaurant-icon">phone</span>
+                    {{ restaurant.phone_number }}
+                </p>
+                <p class="restaurant-status"
+                    [ngClass]="{'status-open': restaurant.status === 'Open', 'status-closed': restaurant.status === 'Closed'}">
+                    <span class="material-icons restaurant-icon"
+                        [ngClass]="{'status-open-icon': restaurant.status === 'Open', 'status-closed-icon': restaurant.status === 'Closed'}">
+                        {{ restaurant.status === 'Open' ? 'check_circle' : 'cancel' }}
+                    </span>
+                    {{ restaurant.status }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="restaurant-header-card" *ngIf="contributor.contributor_id">
+        <div class="restaurant-header">
+            <div class="restaurant-info">
+                <h1 class="restaurant-name">
+                    {{ contributor.username }}
+                </h1>
+                <p class="restaurant-address">
+                    <span class="material-icons restaurant-icon">location_on</span>
+                    {{ contributor.address }}
+                </p>
+                <p class="restaurant-phone">
+                    <span class="material-icons restaurant-icon">phone</span>
+                    {{ contributor.phone_number }}
+                </p>
+                <!-- <p class="restaurant-status"
+                    [ngClass]="{'status-open': restaurant.status === 'Open', 'status-closed': restaurant.status === 'Closed'}">
+                    <span class="material-icons restaurant-icon"
+                        [ngClass]="{'status-open-icon': restaurant.status === 'Open', 'status-closed-icon': restaurant.status === 'Closed'}">
+                        {{ restaurant.status === 'Open' ? 'check_circle' : 'cancel' }}
+                    </span>
+                    {{ restaurant.status }}
+                </p> -->
+            </div>
+        </div>
+    </div>
+    <div class="food-container">
+        <h2>Explore Menu</h2>
+        <div class="food-items-grid">
+            <div *ngFor="let food of foodItems" class="food-item-card"
+                [ngClass]="{'food-unavailable': food.leftover_status === 'Not Available'}">
+                <img [src]="food.food_image" alt="{{ food.food_name }}" class="food-image" />
+                <div class="food-details">
+                    <h3>{{ food.food_name }}</h3>
+                    <p>{{ food.food_description }}</p>
+                    <p>Quantity: {{ food.quantity_available }}</p>
+                    <p>Type: {{ food.food_type }}</p>
+                    <p>Status: {{ food.leftover_status }}</p>
+                    <div class="add-to-cart">
+                        <div *ngIf="!getItemInCart(food)">
+                            <button (click)="addToCart(food)" [disabled]="isFoodUnavailable(food)">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div *ngIf="getItemInCart(food)">
+                            <button (click)="decreaseQuantity(food)">-</button>
+                            <span> {{ getItemInCart(food)?.order_quantity }} added</span>
+                            <button (click)="increaseQuantity(food)"
+                                [disabled]="isFoodUnavailable(food) || getTotalCartQuantity() >= maxCartQuantity">
+                                +
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-popup" *ngIf="showCartPopup">
+    <h3>Your Cart</h3>
+    <div class="cart-items">
+        <div *ngFor="let item of cartItems" class="cart-item">
+            <p>{{ item.food_name }} - Quantity: {{ item.order_quantity }}</p>
+        </div>
+    </div>
+    <div class="cart-buttons">
+        <button (click)="placeOrder(cartItems)" class="order-btn" [disabled]="cartItems.length === 0">Order</button>
+        <button (click)="closeCartPopup()" class="close-btn">Close</button>
+    </div>
+</div>

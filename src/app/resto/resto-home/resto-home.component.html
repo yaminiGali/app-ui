@@ -1,0 +1,36 @@
+<div class="header">
+    <div class="logo-container">
+        <img src="../../assets/logo.png" alt="Logo" class="logo">
+    </div>
+    <div class="welcome-message">
+        Welcome {{data.username}}
+    </div>
+    <div class="profile" (click)="profileMenu()" [matMenuTriggerFor]="userMenu">
+        <span>{{ data.username }}</span>
+        <mat-icon>account_circle</mat-icon>
+    </div>
+    <mat-menu #userMenu="matMenu">
+        <button mat-menu-item>Edit Profile</button>
+        <button mat-menu-item (click)="openDialog()">Add New Restaurant</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+
+</div>
+
+<div class="container">
+    <div class="filter-bar">
+        <input type="text" class="search-bar" placeholder="Search for restaurants" [(ngModel)]="searchTerm" />
+    </div>
+    <div class="restaurant-list">
+        <div class="restaurant-card" *ngFor="let restaurant of filteredRestaurants()" (click)="viewRestaurant(restaurant,restaurant.resto_id,restaurant.restaurant_name,restaurant.restaurant_id)">
+            <img class="restaurant-image" [src]="getFullImageUrl(restaurant.restaurant_logo)" alt="{{ restaurant.restaurant_name }} No pic" style="width: 100%; height: 200px; object-fit: cover;">
+
+            <div class="restaurant-info"> 
+                <h2 class="restaurant-name">{{ restaurant.restaurant_name }}</h2>
+                <p class="restaurant-cuisine">{{ restaurant.cuisine_type }}</p>
+                <p class="restaurant-rating">Rating: {{ restaurant.rating }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+

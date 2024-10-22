@@ -1,0 +1,62 @@
+<div class="addResto-container">
+    <h2>ADD RESTAURANT</h2>
+    <form class="restoform" [formGroup]="addRestoForm" (ngSubmit)="onSubmit()">
+        <label for="restaurant_name">Restaurant Name:</label>
+        <input type="text" id="restaurant_name" formControlName="restaurant_name" required>
+        <div *ngIf="addRestoForm.get('restaurant_name')?.invalid && addRestoForm.get('restaurant_name')?.touched" class="error">
+            <small *ngIf="addRestoForm.get('restaurant_name')?.errors?.['required']">Restaurant Name is required.</small>
+        </div>
+
+        <label for="cuisine_type">Cuisine Type</label>
+        <select id="cuisine_type" formControlName="cuisine_type" required>
+            <option value="" disabled>Select Cuisine Type</option>
+            <option value="Veg">Veg</option>
+            <option value="Non-Veg">Non-Veg</option>
+            <option value="Veg/Non-Veg">Veg/Non-Veg</option>
+        </select>
+        <div *ngIf="addRestoForm.get('cuisine_type')?.invalid && addRestoForm.get('cuisine_type')?.touched" class="error">
+            Please select a Cuisine Type
+        </div>
+        
+        <label for="opening_time">Opening Time:</label>
+        <input type="time" id="opening_time" name="opening_time" formControlName="opening_time">
+        <div *ngIf="addRestoForm.get('opening_time')?.invalid && addRestoForm.get('opening_time')?.touched" class="error">
+            <small *ngIf="addRestoForm.get('opening_time')?.errors?.['required']">Opening Time is required</small>
+        </div>
+
+        <label for="closing_time">Closing Time:</label>
+        <input type="time" id="closing_time" name="closing_time" formControlName="closing_time">
+        <div *ngIf="addRestoForm.get('closing_time')?.invalid && addRestoForm.get('closing_time')?.touched" class="error">
+            <small *ngIf="addRestoForm.get('closing_time')?.errors?.['required']">Closing Time is required</small>
+        </div>
+        
+        <label for="upload">Upload a logo:</label>
+        <input type="file" (change)="onFileSelected($event)">
+
+        <label for="phone_number">Phone Number:</label>
+        <input type="text" id="phone_number" formControlName="phone_number" required>
+        <div *ngIf="addRestoForm.get('phone_number')?.invalid && addRestoForm.get('phone_number')?.touched"
+            class="error">
+            <small *ngIf="addRestoForm.get('phone_number')?.errors?.['required']">Phone Number is required</small>
+            <small *ngIf="addRestoForm.get('phone_number')?.errors?.['pattern']">Phone number must contain only numbers</small>
+            <small *ngIf="addRestoForm.get('phone_number')?.errors?.['minlength']">Enter a valid phone number</small>
+            <small *ngIf="addRestoForm.get('phone_number')?.errors?.['maxlength']">Enter a valid phone number</small>
+        </div>
+
+        <label for="address">Address:</label>
+        <textarea id="address" formControlName="address"></textarea>
+        <div *ngIf="addRestoForm.get('address')?.invalid && addRestoForm.get('address')?.touched" class="error">
+            <small *ngIf="addRestoForm.get('address')?.errors?.['required']">Address is required</small>
+        </div>
+
+        <!-- <label for="pincode">Pincode:</label>
+        <textarea id="pincode" formControlName="pincode"></textarea>
+        <div *ngIf="addRestoForm.get('pincode')?.invalid && addRestoForm.get('pincode')?.touched" class="error">
+            <small *ngIf="addRestoForm.get('pincode')?.errors?.['required']">Pincode is required</small>
+        </div> -->
+
+        <button type="submit" [disabled]="addRestoForm.invalid"
+            [ngClass]="{'disabled-button': addRestoForm.invalid}">Save</button>
+    </form>
+        <button (click)="clearForm()">Cancel</button>
+</div>
