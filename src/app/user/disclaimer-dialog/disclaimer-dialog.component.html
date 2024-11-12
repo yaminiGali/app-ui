@@ -1,0 +1,21 @@
+<div class="mat-dialog-container">
+<h2 mat-dialog-title>Food Disclaimer</h2>
+<div mat-dialog-content>
+  <ul>
+    <li>Only a maximum quantity of 2 items can be ordered at a time.</li>
+    <li>Food is provided for those in need. Please do not waste food.</li>
+    <li>Food portions and availability may be limited; items are served on a first-come, first-served basis.</li>
+    <li>Some food items may have been prepared with spicy ingredients. Consume responsibly.</li>
+    <li>Be mindful of potential allergens, as food may contain spices, nuts, dairy, or other allergens.</li>
+    <li>Orders once placed cannot be modified. Make sure your order is correct before confirming.</li>
+    <li>Distribution of food is managed by our partners; please follow the collection instructions provided.</li>
+    <li>The platform is not responsible for any health issues from consuming food, especially if you have dietary sensitivities.</li>
+    <li>Please respect the intended purpose of this platform. Only individuals genuinely in need are encouraged to place orders.</li>
+    <li>Your support helps us promote a sustainable and waste-free environment. Thank you for your cooperation!</li>
+  </ul>
+</div>
+<div mat-dialog-actions class="actions">
+  <button mat-button mat-dialog-close (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onAccept()">Accept</button>
+</div>
+</div>

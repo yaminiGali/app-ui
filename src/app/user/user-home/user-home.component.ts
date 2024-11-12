@@ -17,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { DisclaimerDialogComponent } from '../disclaimer-dialog/disclaimer-dialog.component';
 
 @Component({
   selector: 'app-user-home',
@@ -66,12 +67,27 @@ export class UserHomeComponent {
   }
 
   viewRestaurant(restaurant:any,restoName:string,restaurant_id:number) {
-    this.router.navigate(['/customer', this.custoId, restoName,'details'],{ state: { data:restaurant_id, info:restaurant, detail:this.customerName, userId:this.custoId, customerId:this.customerId}});
+    const dialogRef = this.dialog.open(DisclaimerDialogComponent, {
+      width: '520px',
+      height: '500px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.router.navigate(['/customer', this.custoId, restoName,'details'],{ state: { data:restaurant_id, info:restaurant, detail:this.customerName, userId:this.custoId, customerId:this.customerId}});
+      }
+    });
   }
 
   viewContributor(contributor:any,contributorName:string,contributor_id:number) {
-    this.router.navigate(['/customer', this.custoId, contributorName,'details'],{ state: { data:contributor_id, info:contributor, detail:this.customerName, userId:this.custoId, customerId:this.customerId}});
-
+    const dialogRef = this.dialog.open(DisclaimerDialogComponent, {
+      width: '520px',
+      height: '500px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.router.navigate(['/customer', this.custoId, contributorName,'details'],{ state: { data:contributor_id, info:contributor, detail:this.customerName, userId:this.custoId, customerId:this.customerId}});
+      }
+    });
   }
 
   getRestaurants(){
