@@ -11,6 +11,7 @@ import { RestaurantFoodComponent } from './resto/restaurant-food/restaurant-food
 import { CustomerFoodComponent } from './user/customer-food/customer-food.component';
 import { ContributorsComponent } from './contributors/contributors.component';
 import { ContributorHomeComponent } from './contributors/contributor-home/contributor-home.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 export const routes: Routes = [
     { path: 'resto', component: RestoComponent },
@@ -23,7 +24,8 @@ export const routes: Routes = [
     { path: 'resto/:id', component: RestoHomeComponent },
     { path: 'contributor/:id', component: ContributorHomeComponent },
     { path: 'resto/:id/:name/details', component: RestaurantFoodComponent },
-    { path: 'customer/:id/:name/details', component: CustomerFoodComponent }
+    { path: 'customer/:id/:name/details', component: CustomerFoodComponent },
+    { path: 'customer/:id/order-history', component: OrderHistoryComponent }
 ];
 
 @NgModule({

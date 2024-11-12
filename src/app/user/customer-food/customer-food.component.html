@@ -9,8 +9,9 @@
     </div>
 
     <mat-menu #userMenu="matMenu">
-        <button mat-menu-item>Edit Profile</button>
-        <button mat-menu-item (click)="logout()">Logout</button>
+        <button mat-menu-item>Edit Profile<mat-icon>edit</mat-icon></button>
+        <button mat-menu-item (click)="history()">History<mat-icon>history</mat-icon></button>
+        <button mat-menu-item (click)="logout()">Logout<mat-icon>logout</mat-icon></button>
     </mat-menu>
 </div>
 <button class="fixed-button" (click)="goBack()">Back</button>
@@ -75,7 +76,7 @@
             </div>
         </div>
     </div>
-    <div class="food-container">
+    <div *ngIf="foodItems.length > 0;" class="food-container">
         <h2>Explore Menu</h2>
         <div class="food-items-grid">
             <div *ngFor="let food of foodItems" class="food-item-card"
@@ -105,6 +106,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div *ngIf="foodItems && foodItems.length === 0;" class="food-container">
+        <h2>No food item has been added by owner</h2>
     </div>
 </div>
 

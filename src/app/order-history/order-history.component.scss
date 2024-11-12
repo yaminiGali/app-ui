@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #7bdc7e;
+    color: #000000;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cont {
+    padding: 100px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    padding-right: 15px;
+}
+
+.profile mat-icon {
+    margin-right: 8px;
+    transition: transform 0.3s;
+}
+
+.profile mat-icon:hover {
+    transform: scale(1.1);
+}
+
+.logo-container {
+    top: 10px;
+    left: 10px;
+}
+
+.logo {
+    max-height: 5vh;
+    width: auto;
+}
+
+.fixed-button {
+    position: fixed;
+    top: 80px;
+    background-color: #00a824;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    margin: 10px;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.fixed-button:hover {
+    background-color: #15663cfc;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.order-container {
+    padding-top: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.order-card {
+    width: 500px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.order-date {
+    position: absolute;
+    top: 20px;
+    right: 5px;
+}
+
+.order-item-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.image-container {
+    margin-right: 15px;
+}
+
+.doodle-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+}

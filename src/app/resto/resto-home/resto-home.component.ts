@@ -18,9 +18,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { AddRestaurantDialogComponent } from '../add-restaurant-dialog/add-restaurant-dialog.component';
-import { Socket, SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+// import { Socket, SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
-const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
+// const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 @Component({
   selector: 'app-resto-home',

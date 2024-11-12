@@ -39,6 +39,7 @@ export class CustomerFoodComponent {
   cartItems: any[] = [];
   maxCartQuantity = 2;
   showCartPopup = false;
+  customerId: any;
 
   constructor(private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient,private router: Router, private location: Location, public dialog: MatDialog,private snackBar: MatSnackBar,private cdr: ChangeDetectorRef) {}
 
@@ -47,7 +48,9 @@ export class CustomerFoodComponent {
     this.contributor = history.state.info;
     this.customer= history.state.detail;
     this.userId=history.state.userId;
-    console.log("this.userId",this.userId)
+    console.log("userId: ",this.userId)
+    this.customerId=history.state.customerId;
+    console.log("customerId: ",this.customerId)
 
     if(this.restaurant.restaurant_id){
       this.getRestaurantFoodList(this.restaurant.restaurant_id);
@@ -206,6 +209,10 @@ export class CustomerFoodComponent {
     }, error => {
       console.error('Error placing order:', error);
     });
+  }
+
+  history(){
+    this.router.navigate(['/customer', this.userId,'order-history'],{ state: { info:this.customer, customerId:this.customerId }});
   }
   
 }

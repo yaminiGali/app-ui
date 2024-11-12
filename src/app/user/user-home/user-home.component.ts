@@ -37,12 +37,12 @@ export class UserHomeComponent {
   name: string | undefined;
   customerName: any;
   profileOpen: boolean = false;
-
+  customerId: any;
   constructor(private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient,private router: Router, public dialog: MatDialog,private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.custoId = this.route.snapshot.params['id'];
-    console.log("Customer ID",this.custoId);
+    console.log("user ID",this.custoId);
     this.getRestaurants();
     this.getContributors();
     this.customerDetails(this.custoId)
@@ -61,12 +61,16 @@ export class UserHomeComponent {
     this.profileOpen = !this.profileOpen;
   }
 
+  history(){
+    this.router.navigate(['/customer', this.custoId,'order-history'],{ state: { info:this.customerName, customerId:this.customerId }});
+  }
+
   viewRestaurant(restaurant:any,restoName:string,restaurant_id:number) {
-    this.router.navigate(['/customer', this.custoId, restoName,'details'],{ state: { data:restaurant_id, info:restaurant, detail:this.customerName, userId:this.custoId}});
+    this.router.navigate(['/customer', this.custoId, restoName,'details'],{ state: { data:restaurant_id, info:restaurant, detail:this.customerName, userId:this.custoId, customerId:this.customerId}});
   }
 
   viewContributor(contributor:any,contributorName:string,contributor_id:number) {
-    this.router.navigate(['/customer', this.custoId, contributorName,'details'],{ state: { data:contributor_id, info:contributor, detail:this.customerName, userId:this.custoId}});
+    this.router.navigate(['/customer', this.custoId, contributorName,'details'],{ state: { data:contributor_id, info:contributor, detail:this.customerName, userId:this.custoId, customerId:this.customerId}});
 
   }
 
@@ -88,10 +92,10 @@ export class UserHomeComponent {
     this.http.get(this.baseUrl+'/customer/'+custoId).subscribe((resp:any)=>{
       const foodDetails = [resp];
       this.customerInfo= foodDetails
-      console.log("Customer Info",this.customerInfo)
-      this.customerName=this.customerInfo[0]
+      this.customerName=this.customerInfo[0];
       console.log("Customer details",this.customerName)
       this.name=this.customerName.username;
+      this.customerId=this.customerName.customer_id;
     })
   }
 
