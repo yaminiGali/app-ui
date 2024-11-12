@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 
 export class SignupComponent {
   users: any;
-  user = { username: '', email: '', password: '', phone_number: '', address: '', role:'' };
+  user = { username: '', firstname:'', lastname:'', email: '', password: '', phone_number: '', address: '', role:'' };
   message: string = '';
   signupForm: FormGroup;
   baseUrl: string = 'http://127.0.0.1:5000/api';
@@ -28,6 +28,8 @@ export class SignupComponent {
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar, private fb: FormBuilder) {
     this.signupForm = this.fb.group({
       username: ['', [Validators.required]],
+      firstname:['', [Validators.required]],
+      lastname:['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       phone_number: ['', [Validators.required, Validators.pattern(/^\d*$/), Validators.minLength(10), Validators.maxLength(10)]],
