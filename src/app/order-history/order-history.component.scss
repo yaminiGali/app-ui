@@ -113,5 +113,85 @@ body {
 
 .text-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+}
+
+.rating-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    // margin-top: 10px;
+    padding-left: 80px;
+    font-family: Arial, sans-serif;
+}
+
+.rating-container label {
+    font-size: 14px;
+    color: #333;
+    margin-right: 5px;
+}
+
+.stars {
+    display: inline-flex;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.stars span {
+    font-size: 24px;
+    color: #d3d3d3;
+    transition: color 0.2s ease-in-out, transform 0.2s ease;
+}
+
+.stars span.filled {
+    color: #ffc107;
+}
+
+.stars span:hover~span {
+    color: #d3d3d3;
+}
+
+.stars span:hover,
+.stars span:hover~span:hover {
+    color: #ffc107;
+}
+
+.stars span:hover {
+    transform: scale(1.2);
+}
+
+.stars span:hover~span {
+    transform: scale(1);
+}
+
+@media (max-width: 768px) {
+    .rating-container label {
+        font-size: 14px;
+    }
+
+    .stars span {
+        font-size: 20px;
+    }
+}
+
+::ng-deep .custom-success-snackbar {
+    background-color: #63ff40;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: colorChange 2s ease-in-out infinite alternate;
+}
+
+@keyframes colorChange {
+  0% {
+    background-color: #FF4081;
+  }
+  50% {
+    background-color: #FF5722;
+  }
+  100% {
+    background-color: #FF4081;
+  }
 }

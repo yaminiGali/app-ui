@@ -11,17 +11,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SharedState } from '../shared-state';
+import { StarRatingModule } from 'angular-star-rating';
 
 // interface Order { food_id: number; food_name: string; order_date: string; order_id: number; order_status: string; quantity_ordered: number; }
-interface OrderItem { food_id: number; food_name: string; order_date: string; order_id: number; order_status: string; quantity_ordered: number; food_image: string; }
+interface OrderItem { food_id: number; food_name: string; order_date: string; order_id: number; order_status: string; quantity_ordered: number; food_image: string; rating:any; }
 @Component({
   selector: 'app-order-history',
   standalone: true,
   imports: [HttpClientModule, CommonModule, MatSelectModule,FormsModule,ReactiveFormsModule,MatInputModule,MatButtonModule,MatIconModule,MatSnackBarModule,
-    MatDialogModule,MatRadioModule,MatMenuModule,MatCardModule,MatFormFieldModule,MatFormField],
+    MatDialogModule,MatRadioModule,MatMenuModule,MatCardModule,MatFormFieldModule,MatFormField,StarRatingModule],
   templateUrl: './order-history.component.html',
   styleUrl: './order-history.component.scss'
 })
@@ -32,8 +33,11 @@ export class OrderHistoryComponent {
   profileOpen: boolean = false;
   groupedOrderHistory: { [order_id: string]: OrderItem[] } = {};
   baseUrl: string = 'http://127.0.0.1:5000/api';
+  foodItems: any;
+  hoverRating: { [key: string]: number } = {};
+  ratings: { [key: string]: number } = {};
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private location: Location) {}
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private location: Location, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.customerInfo=history.state.info;
@@ -67,5 +71,15 @@ export class OrderHistoryComponent {
     }, {} as { [order_id: number]: OrderItem[] });
   }
 
+  rateFood(order_id: number, food_id: number, rating: number): void {
+    const key = `${order_id}_${food_id}`;
+    this.ratings[key] = rating;
+    console.log(`Order ID: ${order_id}, Food ID: ${food_id}, Rating: ${rating}`);
+    const ratingData = { orderId: order_id, foodId: food_id, rating: rating }; 
+    this.http.post(this.baseUrl + '/addRating', ratingData).subscribe(response => {
+      this.snackBar.open("Rated Order Id " +order_id+ " successfully", "Close", { duration: 3000, panelClass: ['custom-success-snackbar'] });
+      console.log("respon",response);
+    });
+  }
 
 }

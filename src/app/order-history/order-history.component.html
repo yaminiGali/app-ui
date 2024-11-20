@@ -29,8 +29,22 @@
                         <img [src]="item.food_image" alt="{{ item.food_image }}" class="doodle-img">
                     </div>
                     <div class="text-container">
-                        <strong>{{ item.food_name }}</strong>
-                        <p>Quantity Ordered: {{ item.quantity_ordered }}</p>
+                        <div>
+                            <strong>{{ item.food_name }}</strong>
+                            <p>Quantity Ordered: {{ item.quantity_ordered }}</p>
+                        </div>
+                        <div class="rating-container">
+                            <label for="rating">Rate:</label>
+                            <div class="stars">
+                                <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                                    (click)="rateFood(+orderId.key, item.food_id, star)"
+                                    (mouseover)="hoverRating[orderId.key + '_' + item.food_id] = star"
+                                    (mouseleave)="hoverRating[orderId.key + '_' + item.food_id] = 0"
+                                    [class.filled]="star <= (hoverRating[orderId.key + '_' + item.food_id] || ratings[orderId.key + '_' + item.food_id] || 0 || item.rating)">
+                                    ★
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </mat-card-content>

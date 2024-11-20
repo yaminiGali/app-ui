@@ -21,7 +21,7 @@ import { SocketModule } from '../../socket.module';
 import { Socket } from 'ngx-socket-io';
 
 
-interface FoodDetails {food_id:string, food_name: string; food_description: string; quantity_available: number; food_type: string; leftover_status: string; expiry_time: number; food_image_url:string}
+interface FoodDetails {food_id:string, food_name: string; food_description: string; quantity_available: number; food_type: string; leftover_status: string; expiry_time: number; food_image:string}
 @Component({
   selector: 'app-restaurant-food',
   standalone: true,
@@ -45,7 +45,7 @@ export class RestaurantFoodComponent {
   historyData: any;
   @ViewChild('myTemplate') myTemplate!: TemplateRef<any>;
   food_image: any;
-  foodDetails: FoodDetails[]=[{food_id:'', food_name: '', food_description: '', quantity_available: 1, food_type: '', leftover_status: '', expiry_time: 24, food_image_url: 'Please Upload'}]
+  foodDetails: FoodDetails[]=[{food_id:'', food_name: '', food_description: '', quantity_available: 1, food_type: '', leftover_status: '', expiry_time: 24, food_image: 'Please Upload'}]
   selectedFoodItem!: FoodDetails | null;
   food_info: FoodDetails[]=[];
   ownerName: any;
@@ -66,7 +66,7 @@ export class RestaurantFoodComponent {
       quantity_available: [1, [Validators.required, Validators.min(1)]],
       food_type: ['Veg', Validators.required],
       leftover_status: ['Available'],
-      food_image_url: ['Please Upload'],
+      food_image: ['Please Upload'],
       expiry_time: [24, Validators.min(1)]
     });
   }
@@ -102,7 +102,7 @@ export class RestaurantFoodComponent {
         quantity_available: food.quantity_available,
         food_type: food.food_type,
         leftover_status: food.leftover_status,
-        food_image_url: food.food_image_url,
+        food_image: food.food_image,
         expiry_time: food.expiry_time,
       });
     } else {
