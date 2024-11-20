@@ -201,7 +201,8 @@ export class CustomerFoodComponent {
   placeOrder(cartItems:any) {
     const orderData = {
       customer_id: this.customer.customer_id,
-      cartItems: cartItems
+      cartItems: cartItems,
+      restaurant_id: this.restaurant.restaurant_id
     }; 
     this.http.post(this.baseUrl + '/placeOrder', orderData).subscribe(response => {
       this.router.navigate(['/customer',this.userId])

@@ -16,15 +16,7 @@ import { Router } from '@angular/router';
 import { SharedState } from '../shared-state';
 
 // interface Order { food_id: number; food_name: string; order_date: string; order_id: number; order_status: string; quantity_ordered: number; }
-interface OrderItem {
-  food_id: number;
-  food_name: string;
-  order_date: string;
-  order_id: number;
-  order_status: string;
-  quantity_ordered: number;
-  food_image: string;
-}
+interface OrderItem { food_id: number; food_name: string; order_date: string; order_id: number; order_status: string; quantity_ordered: number; food_image: string; }
 @Component({
   selector: 'app-order-history',
   standalone: true,

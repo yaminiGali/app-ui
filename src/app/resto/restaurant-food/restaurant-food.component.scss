@@ -348,6 +348,39 @@ button[mat-button] {
 //     }
 // }
 
+/* Notification container to align bell icon and red dot */
+.notification-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Bell icon styles */
+  .bell-icon {
+    font-size: 2rem;
+    color: #555; /* Bell icon color */
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  /* Red dot (notification) styles */
+  .notification-dot {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    border-radius: 50%;
+    border: 2px solid white; /* Optional: to give a clean border */
+    display: inline-block;
+  }
+  
+  /* Optional: Change bell icon color when there are notifications */
+  .notification-container:hover .bell-icon {
+    color: #f39c12; /* Change to an alert color on hover */
+  }
+  
+
 @media (max-width: 1290px) {
     .food-container {
         grid-template-columns: repeat(3, 1fr);

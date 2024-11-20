@@ -127,7 +127,7 @@ export class RestoHomeComponent {
 
   viewRestaurant(restaurants:any,restoId:number,restoName:string,restaurant_id:number) {
     console.log("viewRestaurant",restoId)
-    this.router.navigate(['/resto', restoId, restoName,'details'],{ state: { data:restaurant_id, name:this.data.username}});
+    this.router.navigate(['/resto', restoId, restoName,'details'],{ state: { data:restaurant_id, name:this.data.username, resto_id:restoId, resto_name:restoName } });
   }
 
   filteredRestaurants() {

@@ -17,6 +17,8 @@ import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { AddRestaurantDialogComponent } from '../add-restaurant-dialog/add-restaurant-dialog.component';
 import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
+import { SocketModule } from '../../socket.module';
+import { Socket } from 'ngx-socket-io';
 
 
 interface FoodDetails {food_id:string, food_name: string; food_description: string; quantity_available: number; food_type: string; leftover_status: string; expiry_time: number; food_image_url:string}
@@ -24,7 +26,7 @@ interface FoodDetails {food_id:string, food_name: string; food_description: stri
   selector: 'app-restaurant-food',
   standalone: true,
   imports: [CommonModule, MatSelectModule,FormsModule,ReactiveFormsModule,MatInputModule,MatButtonModule,MatIconModule,MatSnackBarModule,
-    MatDialogModule,MatRadioModule,MatMenuModule,MatCardModule,MatFormFieldModule,MatFormField,HttpClientModule],
+    MatDialogModule,MatRadioModule,MatMenuModule,MatCardModule,MatFormFieldModule,MatFormField,HttpClientModule,SocketModule],
   templateUrl: './restaurant-food.component.html',
   styleUrl: './restaurant-food.component.scss'
 })
@@ -48,8 +50,13 @@ export class RestaurantFoodComponent {
   food_info: FoodDetails[]=[];
   ownerName: any;
   selectedfoodFile: File | null = null;
+  orders: any[] = []; 
+  restoName: string='';
+  restoId:string='';
+  newOrderAlert = false;
+  notifications: any[] = [];
 
-  constructor(private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient, private location: Location, private router: Router, public dialog: MatDialog,private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {
+  constructor(private socket: Socket, private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient, private location: Location, private router: Router, public dialog: MatDialog,private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {
     this.historyData=history.state.data
     this.foodForm = this.fb.group({
       food_id:[],
@@ -67,8 +74,11 @@ export class RestaurantFoodComponent {
   ngOnInit(): void {
     this.restaurant_id = history.state.data;
     this.ownerName=history.state.name;
+    this.restoName=history.state.resto_name;
+    this.restoId=history.state.resto_id;
     this.restaurantDetails(this.restaurant_id)
     this.getFoodData(this.restaurant_id);
+    this.notification();
   }
 
   openPopup(): void {
@@ -234,4 +244,29 @@ export class RestaurantFoodComponent {
     })
   }
 
+  notification(){
+    this.socket.on(`new_order_${this.restaurant_id}`, (notification: any) => {
+      this.notifications.push(notification);
+      if(this.notifications){
+        setTimeout(() => {
+          this.newOrderAlert = true;
+        }, 2000);
+        this.playNotificationSound();
+
+      }
+      console.log('New order received:', notification);
+      console.log('New order in notofications array::', this.notifications);
+    });
+  }
+  
+  playNotificationSound(): void {
+    const audio = new Audio('../../../assets/notification.mpeg'); 
+    audio.play();
+    console.log("audio played")
+  }
+
+  viewOrder() {
+    this.newOrderAlert = false;
+    this.router.navigate(['/resto', this.restoId, this.restoName,'order-list'],{ state: { resto_id:this.restaurant_id, resto_name:this.restoName}});
+  }
 }
