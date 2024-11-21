@@ -8,6 +8,10 @@
     <div class="profile" (click)="profileMenu()" [matMenuTriggerFor]="userMenu">
         <span>{{ contributorInfo }}</span>
         <mat-icon>account_circle</mat-icon>
+        <div class="notification-container">
+            <mat-icon matBadge="!" matBadgeColor="accent" class="notification-bell" (click)="viewOrder()">notifications</mat-icon>
+            <span *ngIf="newOrderAlert" class="notification-dot"></span>
+        </div>
     </div>
     <mat-menu #userMenu="matMenu">
         <button mat-menu-item>Edit Profile</button>

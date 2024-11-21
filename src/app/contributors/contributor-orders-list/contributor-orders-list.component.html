@@ -1,0 +1,56 @@
+<div class="header">
+    <div class="logo-container">
+        <img src="../../assets/logo.png" alt="Logo" class="logo">
+    </div>
+</div>
+<button class="fixed-button" (click)="goBack()">Back</button>
+
+<div class="order-history-container">
+    <h2>Order History</h2>
+    <div *ngFor="let order of groupedOrderHistory | keyvalue" class="order-card">
+        <div class="order-header">
+            <div class="order-info">
+                <span class="order-id">Order ID: {{ order.key }}</span>
+            </div>
+            <div class="customer-info">
+                <h3 class="customer-name">{{ order.value[0].firstname }} {{ order.value[0].lastname }}</h3>
+                <p class="customer-email">{{ order.value[0].email }}</p>
+            </div>
+        </div>
+
+        <div class="order-items">
+            <div *ngFor="let item of order.value" class="order-item">
+                <div class="food-image-container">
+                    <img [src]="item.food_image || 'assets/foodDoodle.png'" alt="{{ item.food_name }}"
+                        class="food-image" />
+                </div>
+                <div class="food-details">
+                    <h4 class="food-name">{{ item.food_name }}</h4>
+                    <p class="quantity">Quantity: {{ item.quantity_ordered }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-status">
+            <span class="status-container">
+                <span class="status-text">Status:</span>
+                <span [ngClass]="getStatusClass(order.value[0].order_status)">
+                    {{ order.value[0].order_status }}
+                </span>
+                <span class="order-date">{{ order.value[0].order_date | date: 'medium' }}</span>
+            </span>
+
+        </div>
+
+        <div class="order-actions">
+            <button *ngIf="order.value[0].order_status === 'Pending'" class="btn-completed"
+                (click)="updateOrderStatus(+order.key, 'Completed')">
+                Mark as Completed
+            </button>
+            <button *ngIf="order.value[0].order_status === 'Pending'" class="btn-cancel"
+                (click)="updateOrderStatus(+order.key, 'Cancelled')">
+                Cancel Order
+            </button>
+        </div>
+    </div>
+</div>

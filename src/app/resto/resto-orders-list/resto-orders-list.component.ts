@@ -18,7 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 interface OrderItem { food_id: number; food_name: string; order_date: string; order_id: number; order_status: string; quantity_ordered: number; food_image: string; firstname:string; lastname:string; email:string}
 
 @Component({
-  selector: 'app-orders-list',
+  selector: 'app-resto-orders-list',
   standalone: true,
   imports: [CommonModule, MatSelectModule,MatInputModule,MatButtonModule,MatIconModule,MatSnackBarModule,
     MatDialogModule,MatRadioModule,MatMenuModule,MatCardModule,MatFormFieldModule,MatFormField,HttpClientModule],

@@ -107,7 +107,7 @@ h2 {
 }
 
 .order-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-1px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -128,7 +128,7 @@ h2 {
 
 .order-id {
   font-weight: bold;
-  color: #555;
+  color: #1f1f1f;
 }
 
 .customer-info {
@@ -222,7 +222,7 @@ h2 {
 }
 
 .btn-completed {
-  background-color: #4caf50;
+  background-color: #50c854;
   color: white;
 }
 
@@ -231,12 +231,12 @@ h2 {
 }
 
 .btn-cancel {
-  background-color: #f44336;
+  background-color: #ef4e42;
   color: white;
 }
 
 .btn-cancel:hover {
-  background-color: #e53935;
+  background-color: #d92f2c;
 }
 
 .status-container {
@@ -247,7 +247,7 @@ h2 {
 
 .status-text {
   font-weight: bold;
-  color: black;
+  color: rgb(58, 58, 58);
   font-size: 0.9rem;
 }
 

@@ -15,13 +15,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
-import { Observable } from 'rxjs';
+import { SocketModule } from '../../socket.module';
+import { Socket } from 'ngx-socket-io';
 interface FoodDetails { food_id: string, contributor_id:number; food_name: string; food_description: string; quantity_available: number; food_type: string; leftover_status: string; expiry_time: number; food_image_url: string }
 @Component({
   selector: 'app-contributor-home',
   standalone: true,
   imports: [CommonModule, MatSelectModule, FormsModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatIconModule, MatSnackBarModule,
-    MatDialogModule, MatRadioModule, MatMenuModule, MatCardModule, MatFormFieldModule, MatFormField, HttpClientModule],
+    MatDialogModule, MatRadioModule, MatMenuModule, MatCardModule, MatFormFieldModule, MatFormField, HttpClientModule, SocketModule],
   templateUrl: './contributor-home.component.html',
   styleUrl: './contributor-home.component.scss'
 })
@@ -44,8 +45,10 @@ export class ContributorHomeComponent {
   food_info: FoodDetails[] = [];
   contributor: any;
   selectedfoodFile: File | null = null;
+  newOrderAlert = false;
+  notifications: any[] = [];
   // constructor(private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient,private router: Router, public dialog: MatDialog,private snackBar: MatSnackBar) {}
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog, private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {
+  constructor(private socket: Socket, private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog, private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {
     this.foodForm = this.fb.group({
       food_id: [''],
       contributor_id: [],
@@ -207,5 +210,32 @@ export class ContributorHomeComponent {
       this.ngOnInit();
       this.cdr.detectChanges();
     })
+  }
+
+  notification(){
+    this.socket.on(`new_order_${this.contributorId}`, (notification: any) => {
+      this.notifications.push(notification);
+      if(this.notifications){
+        setTimeout(() => {
+          this.newOrderAlert = true;
+        }, 2000);
+        this.playNotificationSound();
+
+      }
+      console.log('New order received:', notification);
+      console.log('New order in notofications array::', this.notifications);
+    });
+  }
+  
+  playNotificationSound(): void {
+    const audio = new Audio('../../../assets/notification.mpeg'); 
+    audio.play();
+    console.log("audio played")
+  }
+
+  viewOrder() {
+    this.newOrderAlert = false;
+    this.router.navigate(['/contributor',this.userId,'order-list'], { state: { contributorId:this.contributorId } });
+    // this.router.navigate(['/resto', this.restoId, this.restoName,'order-list'],{ state: { resto_id:this.restaurant_id, resto_name:this.restoName}});
   }
 }

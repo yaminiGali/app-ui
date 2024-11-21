@@ -84,7 +84,7 @@
     display: flex;
     justify-content: center;
     margin: 20px auto;
-    
+
     display: flex;
     background-color: #ffffff;
     border-radius: 12px;
@@ -328,6 +328,33 @@ button[mat-button] {
 //         grid-template-columns: repeat(3, 1fr);
 //     }
 // }
+.notification-container {
+    position: relative;
+    display: inline-block;
+}
+
+.bell-icon {
+    font-size: 2rem;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.notification-dot {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: inline-block;
+}
+
+.notification-container:hover .bell-icon {
+    color: #f39c12;
+}
 
 @media (max-width: 1290px) {
     .food-container {
