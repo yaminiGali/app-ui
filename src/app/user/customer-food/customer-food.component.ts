@@ -40,6 +40,7 @@ export class CustomerFoodComponent {
   maxCartQuantity = 2;
   showCartPopup = false;
   customerId: any;
+  orderData: any;
 
   constructor(private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient,private router: Router, private location: Location, public dialog: MatDialog,private snackBar: MatSnackBar,private cdr: ChangeDetectorRef) {}
 
@@ -199,12 +200,21 @@ export class CustomerFoodComponent {
   }
 
   placeOrder(cartItems:any) {
-    const orderData = {
-      customer_id: this.customer.customer_id,
-      cartItems: cartItems,
-      restaurant_id: this.restaurant.restaurant_id
-    }; 
-    this.http.post(this.baseUrl + '/placeOrder', orderData).subscribe(response => {
+    if(this.restaurant.restaurant_id){
+      this.orderData = {
+        customer_id: this.customer.customer_id,
+        cartItems: cartItems,
+        restaurant_id: this.restaurant.restaurant_id
+      };
+    } else {
+      this.orderData = {
+        customer_id: this.customer.customer_id,
+        cartItems: cartItems,
+        contributor_id: this.contributor.contributor_id
+      };
+    }
+    console.log("this.orderData::",this.orderData);
+    this.http.post(this.baseUrl + '/placeOrder', this.orderData).subscribe(response => {
       this.router.navigate(['/customer',this.userId])
       this.snackBar.open('Order Placed Succesfully', 'Close', { duration: 3000 });
     }, error => {

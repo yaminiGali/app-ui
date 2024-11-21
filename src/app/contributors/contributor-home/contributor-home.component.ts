@@ -17,7 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { SocketModule } from '../../socket.module';
 import { Socket } from 'ngx-socket-io';
-interface FoodDetails { food_id: string, contributor_id:number; food_name: string; food_description: string; quantity_available: number; food_type: string; leftover_status: string; expiry_time: number; food_image_url: string }
+interface FoodDetails { food_id: string, contributor_id:number; food_name: string; food_description: string; quantity_available: number; food_type: string; leftover_status: string; expiry_time: number; food_image: string }
 @Component({
   selector: 'app-contributor-home',
   standalone: true,
@@ -40,7 +40,7 @@ export class ContributorHomeComponent {
   showPopup: boolean = false;
   isEdit = false;
   food_id: any;
-  foodDetails: FoodDetails[] = [{ food_id: '',contributor_id:0, food_name: '', food_description: '', quantity_available: 1, food_type: '', leftover_status: '', expiry_time: 24, food_image_url: 'Please Upload' }]
+  foodDetails: FoodDetails[] = [{ food_id: '',contributor_id:0, food_name: '', food_description: '', quantity_available: 1, food_type: '', leftover_status: '', expiry_time: 24, food_image: 'Please Upload' }]
   selectedFoodItem!: FoodDetails | null;
   food_info: FoodDetails[] = [];
   contributor: any;
@@ -57,13 +57,14 @@ export class ContributorHomeComponent {
       quantity_available: [1, [Validators.required, Validators.min(1)]],
       food_type: ['Veg', Validators.required],
       leftover_status: ['Available'],
-      food_image_url: ['Please Upload'],
+      food_image: ['Please Upload'],
       expiry_time: [4, Validators.min(1)]
     });
   }
   ngOnInit(): void {
     this.userId = this.route.snapshot.params['id'];
     this.getContributor(this.userId)
+    this.notification();
   }
 
   getFullImageUrl(logo: string): string {
@@ -196,7 +197,7 @@ export class ContributorHomeComponent {
         quantity_available: food.quantity_available,
         food_type: food.food_type,
         leftover_status: food.leftover_status,
-        food_image_url: food.food_image_url,
+        food_image: food.food_image,
         expiry_time: food.expiry_time,
       });
       this.editForm(this.foodItems)
@@ -236,6 +237,5 @@ export class ContributorHomeComponent {
   viewOrder() {
     this.newOrderAlert = false;
     this.router.navigate(['/contributor',this.userId,'order-list'], { state: { contributorId:this.contributorId } });
-    // this.router.navigate(['/resto', this.restoId, this.restoName,'order-list'],{ state: { resto_id:this.restaurant_id, resto_name:this.restoName}});
   }
 }
