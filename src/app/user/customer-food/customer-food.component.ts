@@ -16,7 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
-interface FoodItem { food_id: number; food_name: string; food_description: string; quantity_available: number; food_type: string; leftover_status: string; food_image: string; }
+interface FoodItem { food_id: number; food_name: string; food_description: string; quantity_available: number; food_type: string; leftover_status: string; food_image: string; updated_at:Date}
 
 @Component({
   selector: 'app-customer-food',

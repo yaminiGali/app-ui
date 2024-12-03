@@ -38,7 +38,7 @@ export class UserComponent {
           SharedState.loggedIn = true;
           const user = (response as any).user;
           console.log("acc type is:",user.acc_type);
-          if (user.acc_type === 'resto') {
+          if (user.acc_type === 'restaurant') {
             this.router.navigate(['/resto',user.user_id], { state: { data:user } });
           } else if (user.acc_type === 'customer') {
             this.router.navigate(['/customer',user.user_id], { state: { data:user } });

@@ -87,6 +87,7 @@
                     <p>{{ food.food_description }}</p>
                     <p>Quantity: {{ food.quantity_available }}</p>
                     <p>Type: {{ food.food_type }}</p>
+                    <p>Posted at: {{ food.updated_at }}</p>
                     <p>Status: {{ food.leftover_status }}</p>
                     <div class="add-to-cart">
                         <div *ngIf="!getItemInCart(food)">

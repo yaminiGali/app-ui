@@ -22,6 +22,7 @@
         <input type="text" class="search-bar" placeholder="Search for restaurants" [(ngModel)]="searchTerm" />
     </div>
     <div class="restaurant-list">
+        <!-- <div *ngIf="restaurant">No restaurants found!</div> -->
         <div class="restaurant-card" *ngFor="let restaurant of filteredRestaurants()" (click)="viewRestaurant(restaurant,restaurant.resto_id,restaurant.restaurant_name,restaurant.restaurant_id)">
             <img class="restaurant-image" [src]="getFullImageUrl(restaurant.restaurant_logo)" alt="{{ restaurant.restaurant_name }} No pic" style="width: 100%; height: 200px; object-fit: cover;">
 

@@ -7,14 +7,14 @@
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <div class="flex-container">
         <div class="form-group">
-          <label for="firstname">First Name:</label>
+          <label for="firstname">First Name: *</label>
           <input type="text" id="firstname" formControlName="firstname" required>
           <div *ngIf="signupForm.get('firstname')?.invalid && signupForm.get('firstname')?.touched" class="error">
             <small *ngIf="signupForm.get('firstname')?.errors?.['required']">First Name is required.</small>
           </div>
         </div>
         <div class="form-group">
-          <label for="lastname">Last Name:</label>
+          <label for="lastname">Last Name: *</label>
           <input type="text" id="lastname" formControlName="lastname" required>
           <div *ngIf="signupForm.get('lastname')?.invalid && signupForm.get('lastname')?.touched" class="error">
             <small *ngIf="signupForm.get('lastname')?.errors?.['required']">Last Name is required.</small>
@@ -23,17 +23,17 @@
       </div>
       <div class="flex-container">
         <div class="form-group">
-          <label for="username">Username:</label>
+          <label for="username">Username: *</label>
           <input type="text" id="username" formControlName="username" required>
           <div *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched" class="error">
             <small *ngIf="signupForm.get('username')?.errors?.['required']">Username is required.</small>
           </div>
         </div>
         <div class="form-group">
-          <label for="role">Role</label>
+          <label for="role">Role *</label>
           <select id="role" formControlName="role" required>
             <option value="" disabled>Select Role</option>
-            <option value="resto">Resto</option>
+            <option value="restaurant">Restaurant</option>
             <option value="contributor">Contributor</option>
             <option value="customer">Customer</option>
           </select>
@@ -43,30 +43,30 @@
         </div>
       </div>
 
-      <label for="email">Email:</label>
+      <label for="email">Email: *</label>
       <input type="email" id="email" formControlName="email" required>
       <div *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" class="error">
         <small *ngIf="signupForm.get('email')?.errors?.['required']">Email is required</small>
         <small *ngIf="signupForm.get('email')?.errors?.['email']">Enter a valid email address</small>
       </div>
 
-      <label for="password">Password:</label>
+      <label for="password">Password: *</label>
       <input type="password" id="password" formControlName="password" required>
       <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched" class="error">
-        <small *ngIf="signupForm.get('password')?.errors?.['required']">Password is required</small>
-        <small *ngIf="signupForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters</small>
+        <small *ngIf="signupForm.get('password')?.errors?.['required']">Password is required. </small>
+        <small *ngIf="signupForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters. </small>
       </div>
 
-      <label for="phone_number">Phone Number:</label>
+      <label for="phone_number">Phone Number: *</label>
       <input type="text" id="phone_number" formControlName="phone_number" required>
       <div *ngIf="signupForm.get('phone_number')?.invalid && signupForm.get('phone_number')?.touched" class="error">
-        <small *ngIf="signupForm.get('phone_number')?.errors?.['required']">Phone Number is required</small>
-        <small *ngIf="signupForm.get('phone_number')?.errors?.['pattern']">Phone number must contain only numbers</small>
-        <small *ngIf="signupForm.get('phone_number')?.errors?.['minlength']">Enter a valid phone number</small>
-        <small *ngIf="signupForm.get('phone_number')?.errors?.['maxlength']">Enter a valid phone number</small>
+        <small *ngIf="signupForm.get('phone_number')?.errors?.['required']">Phone Number is required. </small>
+        <small *ngIf="signupForm.get('phone_number')?.errors?.['pattern']">Phone number must contain only numbers. </small>
+        <small *ngIf="signupForm.get('phone_number')?.errors?.['minlength']">Enter a valid 10 digit phone number. </small>
+        <small *ngIf="signupForm.get('phone_number')?.errors?.['maxlength']">Enter a valid 10 digit phone number. </small>
       </div>
 
-      <label for="address">Address:</label>
+      <label for="address">Address: *</label>
       <textarea id="address" formControlName="address"></textarea>
       <div *ngIf="signupForm.get('address')?.invalid && signupForm.get('address')?.touched" class="error">
         <small *ngIf="signupForm.get('address')?.errors?.['required']">Address is required</small>
@@ -75,7 +75,7 @@
       <button type="submit" [disabled]="signupForm.invalid"
         [ngClass]="{'disabled-button': signupForm.invalid}">Register</button>
     </form>
-    <p *ngIf="message">{{ message }}</p>
+    <!-- <p *ngIf="message">{{ message }}</p> -->
   </div>
 
   <!-- <button type="button" (click)="getUsers()">Get Community List</button> -->
