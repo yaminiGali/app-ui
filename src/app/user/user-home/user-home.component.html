@@ -16,8 +16,10 @@
     <div class="filter-bar">
         <input type="text" class="search-bar" placeholder="Search for restaurants or cuisines" [(ngModel)]="searchTerm" />
     </div>
-
-    <h2>Explore Restaurants</h2>
+    <div *ngIf="filteredRestaurants().length === 0 && filteredContributors().length === 0" class="no-restaurants">
+        <strong>No search found!</strong>
+    </div>
+    <h2 *ngIf="filteredRestaurants().length> 0">Explore Restaurants</h2>
     <div class="restaurant-list">
         <div class="restaurant-card" *ngFor="let restaurant of filteredRestaurants()" (click)="viewRestaurant(restaurant,restaurant.restaurant_name,restaurant.restaurant_id)">
           <img class="restaurant-image" [src]="getFullImageUrl(restaurant.restaurant_logo)" alt="{{ restaurant.restaurant_name }}" width="100">
@@ -28,7 +30,7 @@
             </div>
         </div>
     </div><br>
-    <h2>Explore Contributors</h2>
+    <h2 *ngIf="filteredContributors().length> 0">Explore Contributors</h2>
     <div class="restaurant-list">
         <div class="restaurant-card" *ngFor="let contributor of filteredContributors()" (click)="viewContributor(contributor,contributor.username,contributor.contributor_id)">
             <div class="restaurant-doodle">

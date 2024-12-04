@@ -1,0 +1,61 @@
+.security-question-screen,
+.reset-password-screen {
+    margin: 20px;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+    max-width: 400px;
+}
+
+.form-control,
+.emailForm,
+.password {
+    width: 95%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    text-transform: uppercase;
+    width: 70%;
+    margin: 5px;
+}
+
+.button.primary {
+    font-size: 14px;
+    width: 150px;
+    background-color: #007BFF;
+    padding: 8px 16px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.button.submit {
+    background-color: #28a745;
+    padding: 8px 16px;
+    font-size: 14px;
+    width: 150px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-success {
+    background-color: #51db71;
+    color: #fff;
+}

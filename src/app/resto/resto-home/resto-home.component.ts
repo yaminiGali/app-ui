@@ -131,7 +131,7 @@ export class RestoHomeComponent {
   }
 
   filteredRestaurants() {
-    if (!this.searchTerm) {
+    if (!this.searchTerm||this.restaurants.length === 0) {
       return this.restaurants;
     }
     return this.restaurants.filter((names: { restaurant_name: string; }) =>

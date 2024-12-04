@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedState } from '../shared-state';
+import { MatDialog } from '@angular/material/dialog';
+import { PswdResetComponent } from '../signup/pswd-reset/pswd-reset.component';
 
 @Component({
   selector: 'app-contributors',
@@ -19,7 +21,7 @@ export class ContributorsComponent {
   baseUrl: string = 'http://127.0.0.1:5000/api';
   contributorId: any;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -49,4 +51,13 @@ export class ContributorsComponent {
       );
     }
   }
+
+  forgotPswd(){
+    const dialogRef = this.dialog.open(PswdResetComponent, {
+      width: '90%', height: 'auto', maxWidth: '400px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
 }

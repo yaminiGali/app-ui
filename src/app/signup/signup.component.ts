@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 
 export class SignupComponent {
   users: any;
-  user = { username: '', firstname:'', lastname:'', email: '', password: '', phone_number: '', address: '', role:'' };
+  user = { username: '', firstname:'', lastname:'', email: '', password: '', phone_number: '', address: '', role:'', securityQuestion:'', securityAnswer:'' };
   message: string = '';
   signupForm: FormGroup;
   baseUrl: string = 'http://127.0.0.1:5000/api';
@@ -30,11 +30,13 @@ export class SignupComponent {
       username: ['', [Validators.required]],
       firstname:['', [Validators.required]],
       lastname:['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook\.com|yahoo\.com|example\.com)$/)]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
       phone_number: ['', [Validators.required, Validators.pattern(/^\d*$/), Validators.minLength(10), Validators.maxLength(10)]],
       address: ['', Validators.required],
-      role: ['', Validators.required]
+      role: ['', Validators.required],
+      securityQuestion: ['', Validators.required],
+      securityAnswer: ['', Validators.required]
     });
   }
 

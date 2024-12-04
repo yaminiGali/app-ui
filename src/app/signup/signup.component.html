@@ -7,14 +7,14 @@
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <div class="flex-container">
         <div class="form-group">
-          <label for="firstname">First Name: *</label>
+          <label for="firstname">First Name <span style="color: red;">*</span></label>
           <input type="text" id="firstname" formControlName="firstname" required>
           <div *ngIf="signupForm.get('firstname')?.invalid && signupForm.get('firstname')?.touched" class="error">
             <small *ngIf="signupForm.get('firstname')?.errors?.['required']">First Name is required.</small>
           </div>
         </div>
         <div class="form-group">
-          <label for="lastname">Last Name: *</label>
+          <label for="lastname">Last Name <span style="color: red;">*</span></label>
           <input type="text" id="lastname" formControlName="lastname" required>
           <div *ngIf="signupForm.get('lastname')?.invalid && signupForm.get('lastname')?.touched" class="error">
             <small *ngIf="signupForm.get('lastname')?.errors?.['required']">Last Name is required.</small>
@@ -23,14 +23,14 @@
       </div>
       <div class="flex-container">
         <div class="form-group">
-          <label for="username">Username: *</label>
+          <label for="username">Username <span style="color: red;">*</span></label>
           <input type="text" id="username" formControlName="username" required>
           <div *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched" class="error">
             <small *ngIf="signupForm.get('username')?.errors?.['required']">Username is required.</small>
           </div>
         </div>
         <div class="form-group">
-          <label for="role">Role *</label>
+          <label for="role">Role <span style="color: red;">*</span></label>
           <select id="role" formControlName="role" required>
             <option value="" disabled>Select Role</option>
             <option value="restaurant">Restaurant</option>
@@ -43,21 +43,23 @@
         </div>
       </div>
 
-      <label for="email">Email: *</label>
+      <label for="email">Email <span style="color: red;">*</span></label>
       <input type="email" id="email" formControlName="email" required>
       <div *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" class="error">
-        <small *ngIf="signupForm.get('email')?.errors?.['required']">Email is required</small>
-        <small *ngIf="signupForm.get('email')?.errors?.['email']">Enter a valid email address</small>
+        <small *ngIf="signupForm.get('email')?.errors?.['required']">Email is required </small>
+        <small *ngIf="signupForm.get('email')?.errors?.['email']">Enter a valid email address </small>
+        <small *ngIf="signupForm.get('email')?.errors?.['pattern']"> Allowed domains: gmail.com, outlook.com, etc.</small>
       </div>
 
-      <label for="password">Password: *</label>
+      <label for="password">Password <span style="color: red;">*</span></label>
       <input type="password" id="password" formControlName="password" required>
       <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched" class="error">
         <small *ngIf="signupForm.get('password')?.errors?.['required']">Password is required. </small>
         <small *ngIf="signupForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters. </small>
+        <small *ngIf="signupForm.get('password')?.errors?.['pattern']"> Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.</small>
       </div>
 
-      <label for="phone_number">Phone Number: *</label>
+      <label for="phone_number">Phone Number <span style="color: red;">*</span></label>
       <input type="text" id="phone_number" formControlName="phone_number" required>
       <div *ngIf="signupForm.get('phone_number')?.invalid && signupForm.get('phone_number')?.touched" class="error">
         <small *ngIf="signupForm.get('phone_number')?.errors?.['required']">Phone Number is required. </small>
@@ -66,10 +68,29 @@
         <small *ngIf="signupForm.get('phone_number')?.errors?.['maxlength']">Enter a valid 10 digit phone number. </small>
       </div>
 
-      <label for="address">Address: *</label>
+      <label for="address">Address <span style="color: red;">*</span></label>
       <textarea id="address" formControlName="address"></textarea>
       <div *ngIf="signupForm.get('address')?.invalid && signupForm.get('address')?.touched" class="error">
         <small *ngIf="signupForm.get('address')?.errors?.['required']">Address is required</small>
+      </div>
+
+      <label for="securityQuestion">Security Question <span style="color: red;">*</span></label>
+      <select id="securityQuestion" formControlName="securityQuestion">
+        <option value="What was your first car?">What was your first car?</option>
+        <option value="What is the name of your first school?">What is the name of your first school?</option>
+        <option value="What is the name of the city you born?">What is the name of the city you born?</option>
+        <option value="What is your favorite vacation spot?">What is your favorite vacation spot?</option>
+        <option value="What is your favorite food?">What is your favorite food?</option>
+        <option value="What is the name of the company of your first job?">What is the name of the company of your first job?</option>
+      </select>
+      <div *ngIf="signupForm.get('securityQuestion')?.invalid && signupForm.get('securityQuestion')?.touched" class="error">
+        <small>Security question is required.</small>
+      </div>
+
+      <label for="securityAnswer">Security Answer <span style="color: red;">*</span></label>
+      <input type="text" id="securityAnswer" formControlName="securityAnswer" />
+      <div *ngIf="signupForm.get('securityAnswer')?.invalid && signupForm.get('securityAnswer')?.touched" class="error">
+        <small>Security answer is required.</small>
       </div>
 
       <button type="submit" [disabled]="signupForm.invalid"

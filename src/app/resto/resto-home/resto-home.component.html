@@ -21,6 +21,9 @@
     <div class="filter-bar">
         <input type="text" class="search-bar" placeholder="Search for restaurants" [(ngModel)]="searchTerm" />
     </div>
+    <div *ngIf="filteredRestaurants().length === 0" class="no-restaurants">
+        <strong>No restaurants found!</strong>
+    </div>
     <div class="restaurant-list">
         <!-- <div *ngIf="restaurant">No restaurants found!</div> -->
         <div class="restaurant-card" *ngFor="let restaurant of filteredRestaurants()" (click)="viewRestaurant(restaurant,restaurant.resto_id,restaurant.restaurant_name,restaurant.restaurant_id)">
