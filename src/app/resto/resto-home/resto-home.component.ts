@@ -130,12 +130,24 @@ export class RestoHomeComponent {
     this.router.navigate(['/resto', restoId, restoName,'details'],{ state: { data:restaurant_id, name:this.data.username, resto_id:restoId, resto_name:restoName } });
   }
 
+  // filteredRestaurants() {
+  //   if (!this.searchTerm||this.restaurants.length === 0) {
+  //     return this.restaurants;
+  //   }
+  //   return this.restaurants.filter((names: { restaurant_name: string; }) =>
+  //     names.restaurant_name.toLowerCase().includes(this.searchTerm.toLowerCase()));
+  // }
+
   filteredRestaurants() {
-    if (!this.searchTerm||this.restaurants.length === 0) {
+    if (!this.restaurants || this.restaurants.length === 0) {
+      return [];
+    }
+    if (!this.searchTerm) {
       return this.restaurants;
     }
-    return this.restaurants.filter((names: { restaurant_name: string; }) =>
-      names.restaurant_name.toLowerCase().includes(this.searchTerm.toLowerCase()));
+    return this.restaurants.filter((restaurant: { restaurant_name: string }) =>
+      restaurant.restaurant_name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
 

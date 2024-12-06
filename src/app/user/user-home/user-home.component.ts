@@ -116,15 +116,21 @@ export class UserHomeComponent {
   }
 
   filteredRestaurants() {
+    if (!this.restaurants || this.restaurants.length === 0) {
+      return [];
+    }
     if (!this.searchTerm) {
       return this.restaurants;
     }
-    return this.restaurants.filter((names: { restaurant_name: string; }) =>
-      names.restaurant_name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    return this.restaurants.filter((restaurant: { restaurant_name: string }) =>
+      restaurant.restaurant_name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
   filteredContributors() {
+    if (!this.contributors || this.contributors.length === 0) {
+      return [];
+    }
     if (!this.searchTerm) {
       return this.contributors;
     }

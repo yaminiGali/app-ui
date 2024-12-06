@@ -160,6 +160,13 @@
   opacity: 0.5; 
   pointer-events: none;
 }
+.no-search,
+.loading{
+    text-align: center;
+    font-size: 1.2rem;
+    color: #b00f0f;
+    margin-top: 20px;
+}
 
 @media (max-width: 1024px) {
   .restaurant-list {
