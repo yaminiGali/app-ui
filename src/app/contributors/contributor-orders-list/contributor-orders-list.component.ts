@@ -61,6 +61,9 @@ export class ContributorOrdersListComponent {
     }
     this.http.get(this.baseUrl + '/viewOrder', { params }).subscribe((response: any) => {
       this.orders = response.orders;
+      this.orders = this.orders.map(order => ({...order,
+        order_date: this.formatDateToSimpleString(order.order_date)
+      }));
       console.log('Order details:', this.orders);
       this.groupOrdersByOrderId(this.orders);
     },
@@ -105,4 +108,10 @@ export class ContributorOrdersListComponent {
         console.error('Error updating order status:', error);
       });
   }
+
+  private formatDateToSimpleString(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toUTCString().replace('GMT', '').trim();
+  }
+
 }

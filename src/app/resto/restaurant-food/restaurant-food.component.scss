@@ -1,13 +1,13 @@
-body{
-    display: flex; 
+body {
+    display: flex;
 }
 
 .header {
     display: flex;
     top: 0;
-    left: 0; 
+    left: 0;
     width: 100%;
-    z-index: 1000; 
+    z-index: 1000;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
@@ -18,7 +18,7 @@ body{
     position: fixed;
 }
 
-.cont{
+.cont {
     padding: 100px;
 }
 
@@ -35,7 +35,7 @@ body{
     padding-right: 25px;
 }
 
-.profile mat-icon { 
+.profile mat-icon {
     margin-right: 8px;
     transition: transform 0.3s;
 }
@@ -110,12 +110,13 @@ body{
     flex-direction: column;
     text-align: left;
 }
+
 .button-container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     padding: 10px;
-  }
+}
 
 .restaurant-info button {
     width: 120px;
@@ -128,11 +129,12 @@ body{
     cursor: pointer;
     margin-bottom: 10px;
     transition: background-color 0.3s ease;
-  }
-  
-  .restaurant-info button:hover {
+}
+
+.restaurant-info button:hover {
     background-color: #2980b9;
-  }
+}
+
 .restaurant-name {
     font-size: 2rem;
     font-weight: bold;
@@ -342,28 +344,19 @@ button[mat-button] {
     pointer-events: auto;
 }
 
-// @media (max-width: 1024px) {
-//     .food-container {
-//         grid-template-columns: repeat(3, 1fr);
-//     }
-// }
-
-/* Notification container to align bell icon and red dot */
 .notification-container {
     position: relative;
     display: inline-block;
-  }
-  
-  /* Bell icon styles */
-  .bell-icon {
+}
+
+.bell-icon {
     font-size: 2rem;
-    color: #555; /* Bell icon color */
+    color: #555;
     cursor: pointer;
     transition: color 0.3s ease;
-  }
-  
-  /* Red dot (notification) styles */
-  .notification-dot {
+}
+
+.notification-dot {
     position: absolute;
     top: -5px;
     right: -5px;
@@ -371,15 +364,17 @@ button[mat-button] {
     height: 12px;
     background-color: red;
     border-radius: 50%;
-    border: 2px solid white; /* Optional: to give a clean border */
+    border: 2px solid white;
     display: inline-block;
-  }
-  
-  /* Optional: Change bell icon color when there are notifications */
-  .notification-container:hover .bell-icon {
-    color: #f39c12; /* Change to an alert color on hover */
-  }
-  
+}
+
+.notification-container:hover .bell-icon {
+    color: #f39c12;
+}
+
+.food-expiry {
+    color: red;
+}
 
 @media (max-width: 1290px) {
     .food-container {

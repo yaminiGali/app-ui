@@ -64,7 +64,6 @@ export class ContributorHomeComponent {
   ngOnInit(): void {
     this.userId = this.route.snapshot.params['id'];
     this.getContributor(this.userId)
-    this.notification();
   }
 
   getFullImageUrl(logo: string): string {
@@ -77,6 +76,7 @@ export class ContributorHomeComponent {
       this.contributorId=resp[0].contributor_id;
       this.contributorInfo=resp[0].username;
       this.getFoodData(this.contributorId);
+      this.notification(this.contributorId);
     });
   }
 
@@ -213,15 +213,14 @@ export class ContributorHomeComponent {
     })
   }
 
-  notification(){
-    this.socket.on(`new_order_${this.contributorId}`, (notification: any) => {
+  notification(contributorId:any){
+    this.socket.on(`new_order_${contributorId}`, (notification: any) => {
       this.notifications.push(notification);
       if(this.notifications){
         setTimeout(() => {
           this.newOrderAlert = true;
         }, 2000);
         this.playNotificationSound();
-
       }
       console.log('New order received:', notification);
       console.log('New order in notofications array::', this.notifications);

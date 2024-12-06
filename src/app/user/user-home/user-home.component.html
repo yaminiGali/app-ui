@@ -22,12 +22,13 @@
     </div>
     <h2 *ngIf="filteredRestaurants().length> 0">Explore Restaurants</h2>
     <div class="restaurant-list">
-        <div class="restaurant-card" *ngFor="let restaurant of filteredRestaurants()" (click)="viewRestaurant(restaurant,restaurant.restaurant_name,restaurant.restaurant_id)">
+        <div class="restaurant-card" *ngFor="let restaurant of filteredRestaurants()" (click)="viewRestaurant(restaurant,restaurant.restaurant_name,restaurant.restaurant_id)" [ngClass]="{'disabled-card': restaurant.status === 'Closed'}">
           <img class="restaurant-image" [src]="getFullImageUrl(restaurant.restaurant_logo)" alt="{{ restaurant.restaurant_name }}" width="100">
             <div class="restaurant-info">
                 <h2 class="restaurant-name">{{ restaurant.restaurant_name }}</h2>
                 <p class="restaurant-cuisine">{{ restaurant.cuisine_type }}</p>
                 <p class="restaurant-rating">Rating: {{ restaurant.average_rating }}</p>
+                <p class="restaurant-stat" [ngClass]="{'open': restaurant.status === 'Open', 'closed': restaurant.status === 'Closed'}">Status: <Strong>{{ restaurant.status }}</Strong></p>
             </div>
         </div>
     </div><br>

@@ -88,7 +88,9 @@
                     <p>Quantity: {{ food.quantity_available }}</p>
                     <p>Type: {{ food.food_type }}</p>
                     <p>Posted at: {{ food.updated_at }}</p>
-                    <p>Status: {{ food.leftover_status }}</p>
+                    <!-- <p>Status: {{ food.leftover_status }}</p> -->
+                    <p class="food-expiry" *ngIf="food.leftover_status === 'Not Available'">Expired</p>
+                    <p class="food-time" *ngIf="food.leftover_status === 'Available'">Expiry: {{ food.expiry_time}} hours</p>
                     <div class="add-to-cart">
                         <div *ngIf="!getItemInCart(food)">
                             <button (click)="addToCart(food)" [disabled]="isFoodUnavailable(food)">
@@ -108,7 +110,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="foodItems && foodItems.length === 0;" class="food-container">
+    <div *ngIf="foodItems && foodItems.length === 0;" class="no-food">
         <h2>No food item has been added by owner</h2>
     </div>
 </div>

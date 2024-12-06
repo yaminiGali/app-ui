@@ -168,6 +168,20 @@
     margin-top: 20px;
 }
 
+.disabled-card {
+  background-color: #f0f0f0;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.restaurant-stat.open {
+  color: #28a745;
+}
+
+.restaurant-stat.closed {
+  color: #dc3545;
+}
+
 @media (max-width: 1024px) {
   .restaurant-list {
     grid-template-columns: repeat(3, 1fr);

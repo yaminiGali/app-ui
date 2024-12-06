@@ -47,7 +47,8 @@
                 <p class="food-type">{{ food.food_type }}</p>
                 <p class="food-description">{{ food.food_description}}</p>
                 <p class="food-quantity">Quantity: {{ food.quantity_available}}</p>
-                <p class="food-expiry">Expiry: {{ food.expiry_time}}</p>
+                <p class="food-expiry" *ngIf="food.leftover_status === 'Not Available'">Expired</p>
+                <p class="food-time" *ngIf="food.leftover_status === 'Available'">Expiry: {{ food.expiry_time}} hours</p>
                 <button mat-button color="primary" (click)="editFood(food)">EDIT</button>
                 <button mat-button color="warn" (click)="deleteFood(food.food_id)">DELETE</button>
             </div>

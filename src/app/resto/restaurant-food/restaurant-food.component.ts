@@ -246,6 +246,7 @@ export class RestaurantFoodComponent {
 
   notification(){
     this.socket.on(`new_order_${this.restaurant_id}`, (notification: any) => {
+      console.log('New order received:', notification);
       this.notifications.push(notification);
       if(this.notifications){
         setTimeout(() => {

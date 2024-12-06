@@ -97,7 +97,7 @@ body {
     padding: 20px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     width: 60%;
-    max-width: 1200px;
+    max-width: 700px;
     transition: box-shadow 0.3s ease;
 }
 
@@ -326,6 +326,17 @@ h1 {
 
 .close-btn:hover {
     background-color: #e92e2e;
+}
+
+.food-expiry {
+    color: red;
+}
+
+.no-food{
+    text-align: center;
+    font-size: 1.2rem;
+    color: #a01616;
+    margin-top: 20px;
 }
 
 @media (max-width: 1290px) {

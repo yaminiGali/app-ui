@@ -16,7 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
-interface FoodItem { food_id: number; food_name: string; food_description: string; quantity_available: number; food_type: string; leftover_status: string; food_image: string; updated_at:Date}
+interface FoodItem { food_id: number; food_name: string; food_description: string; quantity_available: number; food_type: string; leftover_status: string; food_image: string; updated_at:string; expiry_time: number;}
 
 @Component({
   selector: 'app-customer-food',
@@ -87,6 +87,9 @@ export class CustomerFoodComponent {
     this.http.get(this.baseUrl+'/foodList',{ params }).subscribe((resp:any)=>{
       console.log('Restaurant Food List',resp)
       this.foodItems=resp;
+      this.foodItems = this.foodItems.map(food => ({...food,
+        updated_at: this.adjustTimeToNearestHour(this.convertToSystemLocalTime(food.updated_at)),
+      }));
       this.foodDetails.push(this.foodItems);
       console.log("this.foodDetails",this.foodDetails)
     })
@@ -101,6 +104,9 @@ export class CustomerFoodComponent {
     this.http.get(this.baseUrl+'/foodList',{ params }).subscribe((resp:any)=>{
       console.log('Contributor Food List',resp)
       this.foodItems=resp;
+      this.foodItems = this.foodItems.map(food => ({...food,
+        updated_at: this.adjustTimeToNearestHour(this.convertToSystemLocalTime(food.updated_at)),
+      }));
       this.foodDetails.push(this.foodItems);
       console.log("this.foodDetails",this.foodDetails[0])
     });
@@ -221,6 +227,25 @@ export class CustomerFoodComponent {
       console.error('Error placing order:', error);
     });
   }
+
+  convertToSystemLocalTime(gmtTime: string): Date {
+    return new Date(gmtTime);
+  }
+  
+  adjustTimeToNearestHour(date: Date): string {
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    if (minutes >= 30) {
+      date.setHours(hours + 1);
+    }
+    date.setMinutes(0);
+    date.setSeconds(0);
+    const dateOptions: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: '2-digit' };
+    const timeOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+    const formattedDate = date.toLocaleDateString('en-US', dateOptions);
+    const formattedTime = date.toLocaleTimeString('en-US', timeOptions);
+    return `${formattedDate}, ${formattedTime}`;
+  }  
 
   history(){
     this.router.navigate(['/customer', this.userId,'order-history'],{ state: { info:this.customer, customerId:this.customerId }});

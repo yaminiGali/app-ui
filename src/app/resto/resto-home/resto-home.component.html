@@ -32,7 +32,8 @@
             <div class="restaurant-info"> 
                 <h2 class="restaurant-name">{{ restaurant.restaurant_name }}</h2>
                 <p class="restaurant-cuisine">{{ restaurant.cuisine_type }}</p>
-                <p class="restaurant-rating">Rating: {{ restaurant.average_rating }}</p>
+                <p class="restaurant-rating"><Strong>Rating: {{ restaurant.average_rating }}</Strong></p>
+                <p class="restaurant-status" [ngClass]="{'open': restaurant.status === 'Open', 'closed': restaurant.status === 'Closed'}"><Strong>Status: {{ restaurant.status }}</Strong></p>
             </div>
         </div>
     </div>
