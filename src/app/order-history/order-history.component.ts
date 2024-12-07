@@ -29,7 +29,6 @@ interface OrderItem { food_id: number; food_name: string; order_date: string; or
 export class OrderHistoryComponent {
   customerId: any;
   customerInfo: any;
-  // orderHistory: Order[] = [];
   profileOpen: boolean = false;
   groupedOrderHistory: { [order_id: string]: OrderItem[] } = {};
   baseUrl: string = 'http://127.0.0.1:5000/api';
@@ -44,8 +43,8 @@ export class OrderHistoryComponent {
     this.customerId=history.state.customerId;
     console.log("CustomerId: ",this.customerId)
     this.http.get<OrderItem[]>(this.baseUrl+'/orderHistory/'+this.customerId).subscribe((res)=>{
+      res= res.map(order => ({...order, order_date: this.formatDateToSimpleString(order.order_date)}));
       this.groupOrdersByOrderId(res);
-      // this.orderHistory=res
       console.log("Order response List: ",res)
   })
 }
@@ -82,4 +81,8 @@ export class OrderHistoryComponent {
     });
   }
 
+  private formatDateToSimpleString(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toUTCString().replace('GMT', '').trim();
+  }
 }

@@ -23,7 +23,7 @@
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <p class="order-date">Order Date: {{ groupedOrderHistory[orderId.key][0].order_date }}</p>
+                <p class="order-date">Order Date: {{ groupedOrderHistory[orderId.key][0].order_date | date: 'medium'}}</p>
                 <div *ngFor="let item of orderId.value" class="order-item-container">
                     <div class="image-container">
                         <img [src]="item.food_image" alt="{{ item.food_image }}" class="doodle-img">
