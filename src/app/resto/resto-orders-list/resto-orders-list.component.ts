@@ -14,6 +14,8 @@ import { MatFormField, MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 interface OrderItem { food_id: number; food_name: string; order_date: string; order_id: number; order_status: string; quantity_ordered: number; food_image: string; firstname:string; lastname:string; email:string}
 
@@ -86,6 +88,10 @@ export class RestoOrdersListComponent {
     }, {} as { [order_id: number]: OrderItem[] });
   }
 
+  downloadReports(){
+    this.exportToExcel(this.groupedOrderHistory);
+  }
+
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {
       case 'pending':
@@ -116,6 +122,32 @@ export class RestoOrdersListComponent {
   private formatDateToSimpleString(dateString: string): string {
     const date = new Date(dateString);
     return date.toUTCString().replace('GMT', '').trim();
+  }
+
+  exportToExcel(data: any) {
+    const processedData = this.flattenData(data);
+    const worksheet = XLSX.utils.json_to_sheet(processedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Orders Report');
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, 'Orders_Report');
+  }
+
+  private flattenData(data: any): any[] {
+    const reportData: any[] = [];
+    Object.values(data).forEach((ordersList: any) => {
+      ordersList.forEach((order: any) => {
+        reportData.push({ OrderId: order.order_id, FirstName: order.firstname, LastName: order.lastname, FoodId: order.food_id, FoodName: order.food_name,
+          Quantity: order.quantity_ordered, OrderDate: order.order_date, OrderStatus: order.order_status, Email: order.email,
+        });
+      });
+    });
+    return reportData;
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: 'application/octet-stream' });
+    saveAs(data, `${fileName}_${new Date().getTime()}.xlsx`);
   }
 
 }
