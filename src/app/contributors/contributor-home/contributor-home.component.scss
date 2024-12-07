@@ -46,7 +46,7 @@
     width: auto;
 }
 
-.cont{
+.cont {
     padding-top: 100px;
 }
 
@@ -362,6 +362,140 @@ button[mat-button] {
 
 .food-expiry {
     color: red;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+}
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    /* Blurry effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Popup Container */
+.popup-container {
+    width: 450px;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    animation: popup-fadein 0.3s ease-out;
+}
+
+/* Header */
+.popup-container h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #444;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border: 1px solid #4caf50;
+    outline: none;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-submit,
+.btn-cancel,
+.btn-save {
+    flex: 1;
+    margin: 5px;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit,
+.btn-save {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: #45a049;
+}
+
+.btn-cancel:hover {
+    background-color: #d32f2f;
+}
+
+.btn-open {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-open:hover {
+    background-color: #0056b3;
+}
+
+@keyframes popup-fadein {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 @media (max-width: 1290px) {

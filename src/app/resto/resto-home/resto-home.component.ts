@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -42,30 +42,31 @@ export class RestoHomeComponent {
   restaurants: any;
   names:any;
   searchTerm: string = '';
+  editProfileForm: FormGroup;
+  isPopupVisible = false;
+  resto: any;
 
-  constructor(private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient,private router: Router, public dialog: MatDialog,private snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient,private router: Router, public dialog: MatDialog,private snackBar: MatSnackBar, private editfb: FormBuilder) {
     this.foodForm = this.fb.group({
       foodName: [''],
       foodType: [''],
       expiryTime: ['4']
     });
-
-    // this.newOrder = this.socket.fromEvent<any>('new_order');
+    this.editProfileForm= this.editfb.group({
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone_number: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
+      address: ['', Validators.required],
+    });
   }
 
   ngOnInit(): void {
       this.user = this.route.snapshot.params['id'];
       this.userId=this.user
-      console.log("user iddddddddd",this.user);
+      console.log("user id: ",this.user);
       this.getOwnerDetails(this.user);
-
       this.data = history.state.data;
-      console.log(this.data); 
-      // if(this.data)
-      //   this.userId=this.data.user_id;
-      //   this.getOwnerDetails(this.userId);
-      // this.getRestaurants(this.owner_id);
-
   }
   getFullImageUrl(logo: string): string {
     return logo ? `http://127.0.0.1:5000/uploads/${logo}` : '';
@@ -73,10 +74,9 @@ export class RestoHomeComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddRestaurantDialogComponent, {
-      // width: '600px',
-      width: '90%', // Adjust width as needed
-      height: 'auto', // Allow auto height
-      maxWidth: '600px', // Set a max width
+      width: '90%', 
+      height: 'auto', 
+      maxWidth: '600px',
       data:{ownerId: this.owner_id,}
     });
 
@@ -118,9 +118,10 @@ export class RestoHomeComponent {
 
   getOwnerDetails(userId:any){
     this.http.get(this.baseUrl+'/resto/'+userId).subscribe((resp:any)=>{
+      this.resto=resp;
       this.owner_id=resp.resto_id;
       this.user=resp.user_id;
-      console.log("Owner details",resp)
+      console.log("Owner details",this.resto)
       this.getRestaurants(this.owner_id)
     });
   }
@@ -149,24 +150,39 @@ export class RestoHomeComponent {
       restaurant.restaurant_name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
-
-
-  toggleNotificationPanel() {
-    // this.isNotificationPanelOpen = !this.isNotificationPanelOpen;
+  
+  openEditPopup(): void { 
+    this.isPopupVisible = true;
+    this.editfbForm(); 
+  }
+  
+  editfbForm(){
+    this.editProfileForm.patchValue({
+      firstname: this.resto.firstname,
+      lastname: this.resto.lastname,
+      email: this.resto.email,
+      phone_number: this.resto.phone_number,
+      address: this.resto.address,
+    });
   }
 
-  viewOrderDetails(order: any) {
-    // this.selectedOrder = order;
-    // this.isNotificationPanelOpen = false;
+  closeEditPopup(): void {
+    this.isPopupVisible = false;
   }
 
-  getNewOrders() {
-    // this.orderService.getNewOrders().subscribe(orders => {
-    //   this.newOrders = orders;
-    //   if (orders.length > 0) {
-    //     this.hasNewOrder = true;
-    //   }
-    // });
+  onSubmit(): void {
+    if (this.editProfileForm.valid) {
+      const updatedData = this.editProfileForm.value;
+      console.log("updatedData in form::",updatedData)
+      this.http.put(this.baseUrl+'/updateRestaurantOwnerProfile/'+this.userId, updatedData).subscribe((response) => {
+        this.snackBar.open("Updated Restaurant Owner details successfully", "Close", { duration: 3000 });
+        this.closeEditPopup();
+        this.ngOnInit();
+      },
+      (error) => {
+        alert('Error updating profile.');
+      });
+    }
   }
   
 }

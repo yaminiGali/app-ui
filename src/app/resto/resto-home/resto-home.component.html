@@ -10,7 +10,7 @@
         <mat-icon>account_circle</mat-icon>
     </div>
     <mat-menu #userMenu="matMenu">
-        <button mat-menu-item>Edit Profile</button>
+        <button mat-menu-item (click)="openEditPopup()">Edit Profile</button>
         <button mat-menu-item (click)="openDialog()">Add New Restaurant</button>
         <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
@@ -35,6 +35,55 @@
                 <p class="restaurant-rating"><Strong>Rating: {{ restaurant.average_rating }}</Strong></p>
                 <p class="restaurant-status" [ngClass]="{'open': restaurant.status === 'Open', 'closed': restaurant.status === 'Closed'}"><Strong>Status: {{ restaurant.status }}</Strong></p>
             </div>
+        </div>
+    </div>
+    
+    <div *ngIf="isPopupVisible" class="popup-overlay">
+        <div class="popup-container">
+            <h2>Edit Profile Details</h2>
+            <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    <input id="firstname" formControlName="firstname" type="text" placeholder="Enter First Name" />
+                    <div *ngIf="editProfileForm.get('firstname')?.touched && editProfileForm.get('firstname')?.invalid" class= "error">
+                        <small *ngIf="editProfileForm.get('firstname')?.hasError('required')">First name is required.</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    <input id="lastname" formControlName="lastname" type="text" placeholder="Enter Last Name" />
+                    <div *ngIf="editProfileForm.get('lastname')?.touched && editProfileForm.get('lastname')?.invalid" class= "error">
+                        <small *ngIf="editProfileForm.get('lastname')?.hasError('required')">Last name is required.</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" formControlName="email" type="email" placeholder="Enter Email" />
+                    <div *ngIf="editProfileForm.get('email')?.touched && editProfileForm.get('email')?.invalid" class= "error">
+                        <small *ngIf="editProfileForm.get('email')?.hasError('required')">Email is required.</small>
+                        <small *ngIf="editProfileForm.get('email')?.hasError('email')">Invalid email format.</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone_number">Phone Number</label>
+                    <input id="phone_number" formControlName="phone_number" type="text" placeholder="Enter Phone Number" />
+                    <div *ngIf="editProfileForm.get('phone_number')?.touched && editProfileForm.get('phone_number')?.invalid" class= "error">
+                        <small *ngIf="editProfileForm.get('phone_number')?.hasError('required')">Phone number is required.</small>
+                        <small *ngIf="editProfileForm.get('phone_number')?.hasError('pattern')">Invalid phone number format. Enter 10 to 15 digits.</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" formControlName="address" rows="3" placeholder="Enter Address"></textarea>
+                    <div *ngIf="editProfileForm.get('address')?.touched && editProfileForm.get('address')?.invalid" class= "error">
+                        <small *ngIf="editProfileForm.get('address')?.hasError('required')">Address is required.</small>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button type="submit" class="btn-submit">Save Changes</button>
+                    <button type="button" class="btn-cancel" (click)="closeEditPopup()">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

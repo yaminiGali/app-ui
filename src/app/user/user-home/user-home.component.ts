@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -39,7 +39,17 @@ export class UserHomeComponent {
   customerName: any;
   profileOpen: boolean = false;
   customerId: any;
-  constructor(private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient,private router: Router, public dialog: MatDialog,private snackBar: MatSnackBar) {}
+  editProfileForm: FormGroup;
+  isPopupVisible = false;
+  constructor(private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient,private router: Router, public dialog: MatDialog,private snackBar: MatSnackBar,  private editfb: FormBuilder) {
+    this.editProfileForm= this.editfb.group({
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone_number: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
+      address: ['', Validators.required],
+    });
+  }
 
   ngOnInit(): void {
     this.custoId = this.route.snapshot.params['id'];
@@ -139,35 +149,39 @@ export class UserHomeComponent {
     );
   }
 
-  cartItems: any[] = [];
-
-  increment(food: any): void {
-    // if (food.selected_quantity < food.quantity_available) {
-    //   food.selected_quantity++;
-    // }
+    
+  openEditPopup(): void { 
+    this.isPopupVisible = true;
+    this.editfbForm(); 
+  }
+  
+  editfbForm(){
+    this.editProfileForm.patchValue({
+      firstname: this.customerInfo[0].firstname,
+      lastname: this.customerInfo[0].lastname,
+      email: this.customerInfo[0].email,
+      phone_number: this.customerInfo[0].phone_number,
+      address: this.customerInfo[0].address,
+    });
   }
 
-  decrement(food: any): void {
-    // if (food.selected_quantity > 0) {
-    //   food.selected_quantity--;
-    // }
+  closeEditPopup(): void {
+    this.isPopupVisible = false;
   }
 
-  addToCart(food: any): void {
-    // if (food.selected_quantity > 0) {
-    //   const existingItem = this.cartItems.find(item => item.food_name === food.food_name);
-    //   if (!existingItem) {
-    //     this.cartItems.push({ ...food });
-    //   }
-    // }
-  }
-  editFoodItem(food:any){
-
-  }
-
-  checkout(): void {
-    // Logic for checkout
-    console.log('Cart Items:', this.cartItems);
+  onSubmit(): void {
+    if (this.editProfileForm.valid) {
+      const updatedData = this.editProfileForm.value;
+      console.log("updatedData in form::",updatedData)
+      this.http.put(this.baseUrl+'/updateCustomerProfile/'+this.custoId, updatedData).subscribe((response) => {
+        this.snackBar.open("Updated Customer details successfully", "Close", { duration: 3000 });
+        this.closeEditPopup();
+        this.ngOnInit();
+      },
+      (error) => {
+        alert('Error updating profile.');
+      });
+    }
   }
 
 }

@@ -47,8 +47,10 @@ export class ContributorHomeComponent {
   selectedfoodFile: File | null = null;
   newOrderAlert = false;
   notifications: any[] = [];
+  editProfileForm: FormGroup;
+  isPopupVisible = false;
   // constructor(private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient,private router: Router, public dialog: MatDialog,private snackBar: MatSnackBar) {}
-  constructor(private socket: Socket, private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog, private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {
+  constructor(private socket: Socket, private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog, private snackBar: MatSnackBar, private cdr: ChangeDetectorRef, private editfb: FormBuilder) {
     this.foodForm = this.fb.group({
       food_id: [''],
       contributor_id: [],
@@ -59,6 +61,13 @@ export class ContributorHomeComponent {
       leftover_status: ['Available'],
       food_image: ['Please Upload'],
       expiry_time: [4, Validators.min(1)]
+    });
+    this.editProfileForm= this.editfb.group({
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone_number: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
+      address: ['', Validators.required],
     });
   }
   ngOnInit(): void {
@@ -236,5 +245,39 @@ export class ContributorHomeComponent {
   viewOrder() {
     this.newOrderAlert = false;
     this.router.navigate(['/contributor',this.userId,'order-list'], { state: { contributorId:this.contributorId } });
+  }
+
+  openEditPopup(): void { 
+    this.isPopupVisible = true;
+    this.editfbForm(); 
+  }
+  
+  editfbForm(){
+    this.editProfileForm.patchValue({
+      firstname: this.contributor[0].firstname,
+      lastname: this.contributor[0].lastname,
+      email: this.contributor[0].email,
+      phone_number: this.contributor[0].phone_number,
+      address: this.contributor[0].address,
+    });
+  }
+
+  closeEditPopup(): void {
+    this.isPopupVisible = false;
+  }
+
+  onSubmit(): void {
+    if (this.editProfileForm.valid) {
+      const updatedData = this.editProfileForm.value;
+      console.log("updatedData in form::",updatedData)
+      this.http.put(this.baseUrl+'/updatecontributorProfile/'+this.userId, updatedData).subscribe((response) => {
+        this.snackBar.open("Updated Contributor details successfully", "Close", { duration: 3000 });
+        this.closeEditPopup();
+        this.ngOnInit();
+      },
+      (error) => {
+        alert('Error updating profile.');
+      });
+    }
   }
 }
