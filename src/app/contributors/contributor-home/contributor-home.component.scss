@@ -376,24 +376,22 @@ button[mat-button] {
     height: 100%;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
-    /* Blurry effect */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
 
-/* Popup Container */
 .popup-container {
     width: 450px;
     background: white;
     padding: 25px;
+    padding-right: 40px;
     border-radius: 12px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     animation: popup-fadein 0.3s ease-out;
 }
 
-/* Header */
 .popup-container h2 {
     text-align: center;
     font-size: 1.8rem;
@@ -402,7 +400,6 @@ button[mat-button] {
     font-weight: bold;
 }
 
-/* Form Groups */
 .form-group {
     margin-bottom: 15px;
 }
@@ -432,7 +429,6 @@ button[mat-button] {
     outline: none;
 }
 
-/* Buttons */
 .buttons {
     display: flex;
     justify-content: space-between;
