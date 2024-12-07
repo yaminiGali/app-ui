@@ -14,7 +14,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
-import { AddRestaurantDialogComponent } from '../add-restaurant-dialog/add-restaurant-dialog.component';
 import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
 import { SocketModule } from '../../socket.module';
@@ -55,8 +54,13 @@ export class RestaurantFoodComponent {
   restoId:string='';
   newOrderAlert = false;
   notifications: any[] = [];
+  editRestaurant: boolean = false;
+  editRestaurantForm: FormGroup;
+  selectedFile: File | undefined;
+  showLogoUpload = false;
+  formData = new FormData();
 
-  constructor(private socket: Socket, private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient, private location: Location, private router: Router, public dialog: MatDialog,private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {
+  constructor(private socket: Socket, private fb: FormBuilder, private editfb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private location: Location, private router: Router, public dialog: MatDialog,private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {
     this.historyData=history.state.data
     this.foodForm = this.fb.group({
       food_id:[],
@@ -68,6 +72,15 @@ export class RestaurantFoodComponent {
       leftover_status: ['Available'],
       food_image: ['Please Upload'],
       expiry_time: [24, Validators.min(1)]
+    });
+    this.editRestaurantForm = this.editfb.group({
+      restaurant_name: ['', Validators.required],
+      opening_time: ['', Validators.required],
+      closing_time: ['', Validators.required],
+      restaurant_logo: [null],
+      phone_number: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
+      address: ['', Validators.required],
+      status: ['', Validators.required]
     });
   }
 
@@ -270,4 +283,53 @@ export class RestaurantFoodComponent {
     this.newOrderAlert = false;
     this.router.navigate(['/resto', this.restoId, this.restoName,'order-list'],{ state: { resto_id:this.restaurant_id, resto_name:this.restoName}});
   }
+
+  openEditPopup(){
+    this.editRestaurant=true;
+    this.editRestaurantDetails();
+  }
+
+  onFileSelectedEdit(event: any): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      this.showLogoUpload = false;
+    } 
+  }
+
+  editRestaurantDetails(){
+    this.editRestaurantForm.patchValue({
+      restaurant_name: this.restaurant[0].restaurant_name,
+      opening_time: this.restaurant[0].opening_time,
+      closing_time: this.restaurant[0].closing_time,
+      restaurant_logo: this.restaurant[0].restaurant_logo,
+      phone_number: this.restaurant[0].phone_number,
+      address: this.restaurant[0].address,
+      status: this.restaurant[0].status
+    });
+  }
+
+  closeEditPopup(): void {
+    this.editRestaurant = false;
+  }
+
+onSubmit(){
+  const formData = new FormData();
+    Object.keys(this.editRestaurantForm.value).forEach((key) => {
+      if (key === 'restaurant_logo' && this.selectedFile) {
+        formData.append(key, this.selectedFile, this.selectedFile.name);
+      } else {
+        formData.append(key, this.editRestaurantForm.value[key]);
+      }
+    });
+    this.http.put(this.baseUrl+'/updateRestaurant/'+this.restaurant[0].restaurant_id, formData).subscribe((response) => {
+      this.snackBar.open("Updated Restaurant details successfully", "Close", { duration: 3000 });
+      this.closeEditPopup();
+      this.ngOnInit();
+    },
+    (error) => {
+      alert('Error updating profile');
+    });
+  }
+
 }

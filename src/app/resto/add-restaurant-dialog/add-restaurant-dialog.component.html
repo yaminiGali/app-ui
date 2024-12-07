@@ -49,14 +49,6 @@
             <small *ngIf="addRestoForm.get('address')?.errors?.['required']">Address is required</small>
         </div>
 
-        <!-- <label for="pincode">Pincode:</label>
-        <textarea id="pincode" formControlName="pincode"></textarea>
-        <div *ngIf="addRestoForm.get('pincode')?.invalid && addRestoForm.get('pincode')?.touched" class="error">
-            <small *ngIf="addRestoForm.get('pincode')?.errors?.['required']">Pincode is required</small>
-        </div> -->
-
-        <button type="submit" [disabled]="addRestoForm.invalid"
-            [ngClass]="{'disabled-button': addRestoForm.invalid}">Save</button>
+        <button type="submit" [disabled]="addRestoForm.invalid" [ngClass]="{'disabled-button': addRestoForm.invalid}">Save</button>
     </form>
-        <!-- <button (click)="clearForm()">Cancel</button> -->
 </div>

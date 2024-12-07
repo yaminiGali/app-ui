@@ -60,52 +60,21 @@ export class AddRestaurantDialogComponent {
       }
     });
   
-    // Check the formData contents for debugging
     formData.forEach((value, key) => {
       console.log(key + ': ' + value);
-      // console.log("get all form data",formData.getAll)
     });
     this.dialogRef.close(formData);
   }
 
-  // onFileSelected(event: any) {
-  //   this.restaurant_details.restaurant_logo = event.target.files[0];
-  //   console.log("LOGOO",this.restaurant_details.restaurant_logo)
-    
-  // }
   onFileSelected(event:any) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0]; // Assign the selected file
+      this.selectedFile = input.files[0]; 
     }
     console.log("this.selectedFile",this.selectedFile)
   }
 
-  editFood(resto: any): void {
-    // this.showPopup = true;
-    // this.isEdit=true
-    // this.food_id=food.food_id
-    // console.log("food",food);
-    // console.log("food Iddd",this.food_id);
-    // if (this.foodDetails.length > 0) {
-    //   this.foodForm.patchValue({
-    //     food_name: food.food_name,
-    //     food_description: food.food_description,
-    //     quantity_available: food.quantity_available,
-    //     food_type: food.food_type,
-    //     leftover_status: food.leftover_status,
-    //     food_image_url: food.food_image_url,
-    //     expiry_time: food.expiry_time,
-    //   });
-    //   this.editForm(this.foodItems)
-    // } else {
-    //   this.selectedFoodItem = null; 
-    // }
-  }
-
   clearForm(): void {
-    // this.closePopup()
-    // this.selectedResto = null;
     this.addRestoForm.reset({
       rating: '0',
       status: 'open',

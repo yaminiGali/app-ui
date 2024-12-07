@@ -33,7 +33,7 @@
         </div>
         <div class="button-container">
             <button mat-raised-button color="primary" class="addFood" (click)="openPopup()">ADD FOOD</button>
-            <button mat-raised-button color="primary" class="editResto" (click)="openPopup()">EDIT RESTAURANT</button>
+            <button mat-raised-button color="primary" class="editResto" (click)="openEditPopup()">EDIT RESTAURANT</button>
             <button mat-raised-button color="warm" class="deleteResto"
                 (click)="deleteRestaurant(i.restaurant_id)">DELETE
                 RESTAURANT</button>
@@ -109,9 +109,8 @@
                 <label for="expiry_time">Expiry Time (hours):</label>
                 <input id="expiry_time" type="number" formControlName="expiry_time">
                 <div *ngIf="foodForm.get('expiry_time')?.invalid && foodForm.get('expiry_time')?.touched">
-                    <small *ngIf="foodForm.get('expiry_time')?.hasError('required')">Expiry time is required.</small>
-                    <small *ngIf="foodForm.get('expiry_time')?.hasError('min')">Expiry time must be at least 1
-                        hour.</small>
+                    <small *ngIf="foodForm.get('expiry_time')?.hasError('required')">Expiry time is required. </small>
+                    <small *ngIf="foodForm.get('expiry_time')?.hasError('min')">Expiry time must be at least 1 hour.</small>
                 </div>
             </div>
             <button type="submit" [disabled]="foodForm.invalid">Save</button>
@@ -124,4 +123,66 @@
             <ng-container *ngTemplateOutlet="popupTemplate"></ng-container>
         </div>
     </div>
+
+    <div class="popup-overlay" *ngIf="editRestaurant">
+        <div class="modal-container">
+            <h2>Edit Restaurant</h2>
+            <form [formGroup]="editRestaurantForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="restaurant_name">Restaurant Name</label>
+                    <input id="restaurant_name" formControlName="restaurant_name" type="text" class="form-control" />
+                    <div *ngIf="editRestaurantForm.get('restaurant_name')?.touched && editRestaurantForm.get('restaurant_name')?.invalid" class="validation-message">
+                        <small *ngIf="editRestaurantForm.get('restaurant_name')?.hasError('required')">Restaurant name is required.</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="opening_time">Opening Time</label>
+                    <input id="opening_time" formControlName="opening_time" type="time" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="closing_time">Closing Time</label>
+                    <input id="closing_time" formControlName="closing_time" type="time" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant_logo">Upload a Logo</label>
+                    <input type="file" id="restaurant_logo" (change)="onFileSelectedEdit($event)" class="form-control" />
+                    <div *ngIf="!showLogoUpload && restaurant.restaurant_logo" class="logo-display">
+                        <img [src]="'/path/to/your/logo/' + restaurant.restaurant_logo" alt="Current Logo" class="logo-preview" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_number">Phone Number</label>
+                    <input id="phone_number" formControlName="phone_number" type="text" class="form-control" />
+                    <div *ngIf="editRestaurantForm.get('phone_number')?.touched && editRestaurantForm.get('phone_number')?.invalid" class="validation-message">
+                        <small *ngIf="editRestaurantForm.get('phone_number')?.hasError('required')">Phone number is required. </small>
+                        <small *ngIf="editRestaurantForm.get('phone_number')?.hasError('pattern')">Invalid phone number format. Enter only 10 digits.</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" formControlName="address" class="form-control"></textarea>
+                    <div *ngIf="editRestaurantForm.get('address')?.touched && editRestaurantForm.get('address')?.invalid" class="validation-message">
+                        <small *ngIf="editRestaurantForm.get('address')?.hasError('required')">Address is required.</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" formControlName="status" class="form-control">
+                        <option value="Open">Open</option>
+                        <option value="Closed">Closed</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-submit" [disabled]="editRestaurantForm.invalid">Submit</button>
+                <button type="button" class="btn btn-cancel" (click)="closeEditPopup()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
 </div>

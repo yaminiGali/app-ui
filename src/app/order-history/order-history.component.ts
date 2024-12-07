@@ -14,7 +14,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SharedState } from '../shared-state';
-import { StarRatingModule } from 'angular-star-rating';
 
 // interface Order { food_id: number; food_name: string; order_date: string; order_id: number; order_status: string; quantity_ordered: number; }
 interface OrderItem { food_id: number; food_name: string; order_date: string; order_id: number; order_status: string; quantity_ordered: number; food_image: string; rating:any; }
@@ -22,7 +21,7 @@ interface OrderItem { food_id: number; food_name: string; order_date: string; or
   selector: 'app-order-history',
   standalone: true,
   imports: [HttpClientModule, CommonModule, MatSelectModule,FormsModule,ReactiveFormsModule,MatInputModule,MatButtonModule,MatIconModule,MatSnackBarModule,
-    MatDialogModule,MatRadioModule,MatMenuModule,MatCardModule,MatFormFieldModule,MatFormField,StarRatingModule],
+    MatDialogModule,MatRadioModule,MatMenuModule,MatCardModule,MatFormFieldModule,MatFormField],
   templateUrl: './order-history.component.html',
   styleUrl: './order-history.component.scss'
 })
