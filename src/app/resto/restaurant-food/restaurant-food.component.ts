@@ -220,6 +220,7 @@ export class RestaurantFoodComponent {
     this.http.get(this.baseUrl + '/getFoodDetails', { params }).subscribe((data) => {
       this.foodItems = data;
       console.log("this.foodItems",this.foodItems);
+      console.log("this.foodItems length",this.foodItems.length);
       this.foodDetails.push(this.foodItems);
       console.log("this.foodDetails", this.foodDetails[1])
     });

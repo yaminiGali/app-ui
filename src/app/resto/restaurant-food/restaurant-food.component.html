@@ -28,19 +28,17 @@
             <p class="restaurant-time">Open: {{ i.opening_time }} - Close: {{ i.closing_time }}</p>
             <p class="restaurant-phone_number">Call: {{ i.phone_number }}</p>
             <p class="restaurant-status" [ngClass]="{'open': i.status === 'Open', 'closed': i.status !== 'Open'}">
-                Status: {{
-                i.status }}</p>
+                Status: {{ i.status }}</p>
         </div>
         <div class="button-container">
             <button mat-raised-button color="primary" class="addFood" (click)="openPopup()">ADD FOOD</button>
             <button mat-raised-button color="primary" class="editResto" (click)="openEditPopup()">EDIT RESTAURANT</button>
-            <button mat-raised-button color="warm" class="deleteResto"
-                (click)="deleteRestaurant(i.restaurant_id)">DELETE
-                RESTAURANT</button>
+            <button mat-raised-button color="warm" class="deleteResto" (click)="deleteRestaurant(i.restaurant_id)">DELETE RESTAURANT</button>
         </div>
     </div>
 
     <div class="food-container">
+        <div class="no-food" *ngIf="foodItems.length === 0"><b>Please Add Food items to your Restaurant!</b></div>
         <div class="food-card" *ngFor="let food of foodItems"
             [ngClass]="{'disabled-card': food.leftover_status === 'Not Available'}">
             <img class="food-image" [src]="food.food_image" alt="Food image">

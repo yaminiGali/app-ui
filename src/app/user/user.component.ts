@@ -42,9 +42,9 @@ export class UserComponent {
           const user = (response as any).user;
           console.log("acc type is:",user.acc_type);
           if (user.acc_type === 'restaurant') {
+            this.snackBar.open('Restaurant account! Navigating...', 'Close', { duration: 3000 });
             this.router.navigate(['/resto',user.user_id], { state: { data:user } });
           } else if (user.acc_type === 'customer') {
-            this.snackBar.open('Customer account! Navigating...', 'Close', { duration: 3000 });
             this.router.navigate(['/customer',user.user_id], { state: { data:user } });
           } else if (user.acc_type === 'contributor'){
             this.snackBar.open('Contributor account! Navigating...', 'Close', { duration: 3000 });

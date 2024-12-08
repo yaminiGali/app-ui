@@ -36,6 +36,7 @@
 
 <div class="container">
     <div class="food-container">
+        <div class="no-food" *ngIf="foodItems.length === 0"><b>Please Add Food items!</b></div>
         <div class="food-card" *ngFor="let food of foodItems"
             [ngClass]="{'disabled-card': food.leftover_status === 'Not Available'}">
             <img class="food-image" [src]="food.food_image" alt="Food image">
@@ -117,7 +118,7 @@
     </div>
     <div *ngIf="isPopupVisible" class="popup-overlay">
         <div class="popup-container">
-            <h2>Edit Profile Details</h2>
+            <h2>Edit Contributor Profile</h2>
             <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="firstname">First Name</label>

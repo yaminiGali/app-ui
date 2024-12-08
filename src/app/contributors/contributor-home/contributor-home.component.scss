@@ -482,6 +482,15 @@ button[mat-button] {
     background-color: #0056b3;
 }
 
+.no-food {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #d31b1b;
+    margin-top: 20px;
+}
+
 @keyframes popup-fadein {
     from {
         transform: translateY(-20px);

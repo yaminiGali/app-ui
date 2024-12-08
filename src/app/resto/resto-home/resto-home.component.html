@@ -22,7 +22,7 @@
         <input type="text" class="search-bar" placeholder="Search for restaurants" [(ngModel)]="searchTerm" />
     </div>
     <div class="restaurant-list">
-        <div *ngIf="!restaurants" class="loading"><Strong>Loading...</Strong></div>
+        <div *ngIf="!restaurants" class="loading"><Strong>No Restaurants to display!. Please Add </Strong></div>
         <div *ngIf="filteredRestaurants().length === 0 && restaurants" class="no-restaurants-message">
             No restaurants found!
         </div>
@@ -40,7 +40,7 @@
     
     <div *ngIf="isPopupVisible" class="popup-overlay">
         <div class="popup-container">
-            <h2>Edit Profile Details</h2>
+            <h2>Edit Restaurant Owner Profile</h2>
             <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="firstname">First Name</label>
