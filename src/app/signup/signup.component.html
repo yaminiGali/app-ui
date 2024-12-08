@@ -96,7 +96,7 @@
       <button type="submit" [disabled]="signupForm.invalid"
         [ngClass]="{'disabled-button': signupForm.invalid}">Register</button>
     </form>
-    <!-- <p *ngIf="message">{{ message }}</p> -->
+    <p *ngIf="errorMessage">{{ errorMessage }}</p>
   </div>
 
   <!-- <button type="button" (click)="getUsers()">Get Community List</button> -->

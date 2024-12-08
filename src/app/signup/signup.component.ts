@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 export class SignupComponent {
   users: any;
   user = { username: '', firstname:'', lastname:'', email: '', password: '', phone_number: '', address: '', role:'', securityQuestion:'', securityAnswer:'' };
-  message: string = '';
+  errorMessage: string = '';
   signupForm: FormGroup;
   baseUrl: string = 'http://127.0.0.1:5000/api';
 
@@ -51,9 +51,12 @@ export class SignupComponent {
         this.showSuccessMessage(response.message);
       },
       error => {
-        this.message = 'Error! Account with this email already exists';
-      }
-    );
+        if (error.status === 409) {
+          this.errorMessage = error.error.message
+        } else {
+          this.errorMessage = error.error.message
+        }
+      });
   }
 
   getUsers() {
@@ -61,7 +64,7 @@ export class SignupComponent {
       this.users = resp;
     },
       error => {
-        this.message = 'Error while fetching community data. Please try again.';
+        this.errorMessage = 'Error while fetching community data. Please try again.';
       })
   }
 

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { SharedState } from '../shared-state';
 import { MatDialog } from '@angular/material/dialog';
 import { PswdResetComponent } from '../signup/pswd-reset/pswd-reset.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-contributors',
@@ -21,7 +22,7 @@ export class ContributorsComponent {
   baseUrl: string = 'http://127.0.0.1:5000/api';
   contributorId: any;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, public dialog: MatDialog, private snackBar: MatSnackBar,) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -40,9 +41,14 @@ export class ContributorsComponent {
           if (user.acc_type === 'restaurant') {
             this.router.navigate(['/resto',user.user_id], { state: { data:user } });
           } else if (user.acc_type === 'customer') {
+            this.snackBar.open('Customer account! Navigating...', 'Close', { duration: 3000 });
             this.router.navigate(['/customer',user.user_id], { state: { data:user } });
-          } else {
+          } else if (user.acc_type === 'contributor'){
+            this.snackBar.open('Contributor account! Navigating...', 'Close', { duration: 3000 });
             this.router.navigate(['/contributor',user.user_id], { state: { data:user } });
+          } else {
+            console.error('Unknown account type');
+            this.snackBar.open('Unknown account type', 'Close', { duration: 3000 });
           }
         },
         error => {
